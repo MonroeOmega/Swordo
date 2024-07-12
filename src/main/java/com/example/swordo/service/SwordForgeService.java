@@ -1,5 +1,6 @@
 package com.example.swordo.service;
 
+import com.example.swordo.models.entity.Sword;
 import com.example.swordo.models.entity.SwordTypeEnum;
 
 public interface SwordForgeService {

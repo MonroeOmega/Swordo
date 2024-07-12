@@ -6,4 +6,8 @@ public interface SwordService {
     void saveSword(Sword sword);
 
     Sword getSword(Long id);
+
+    void broken();
+
+    Sword getBroken();
 }

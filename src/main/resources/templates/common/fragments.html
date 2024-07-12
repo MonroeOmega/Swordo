@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Swordo</title>
 </head>
 <body>
-
-</body>
+<header th:fragment="navigation">
+    <nav>
+        <div>
+            <ul>
+                <th:block sec:authorize="isAnonymous()">
+                    <li>
+                        <a th:href="@{/user/login}">Login</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/user/register}">Register</a>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="hasRole('ADMIN')">
+                    <a th:href="">Admin Console</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <th:block>
+                        <li>
+                            <a href="#">Battlefields</a>
+                        </li>
+                    </th:block>
+                    <th:block>
+                        <li>
+                            <a href="#">Fight</a>
+                        </li>
+                    </th:block>
+                    <li>
+                        <a href="#">Forge</a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#">Town</a>
+                    </li>
+                    <li>
+                        <form th:action="@{/user/logout}" th:method="post">
+                        <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </nav>
+</header>
 <footer th:fragment="footer">
     <br/>
     <br/>
@@ -17,4 +61,5 @@
     <br/>
     Made by Martin Zhekov. All rights reserved (maybe)</footer>
 </body>
+
 </html>

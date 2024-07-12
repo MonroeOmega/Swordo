@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/fragments::head">
+<head th:replace="~{common/fragments::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<header th:replace="~{common/fragments::navigation}"></header>
 <main>
     <div>
         <div>
@@ -13,28 +14,19 @@
             <h3><strong>Enter valid username and password</strong></h3>
         </div>
         <div>
-            <form th:action="@{/user/login}" th:method="POST" th:object="${userLoginBindingModel}">
-                <h3 th:if="${isFound == false}">
-                    <strong>Such user does not exist.</strong>
-                </h3>
+            <form th:action="@{/user/login}" th:method="POST">
                 <div>
                     <label for="username">Username</label>
                     <div>
-                        <input th:field="*{username}" type="text" id="username"
+                        <input name="username" type="text" id="username"
                                aria-describedby="usernameHelpInline" placeholder="Username">
-                        <small id="usernameHelpInline" th:if="${#fields.hasErrors()}">
-                            Username are between 5 and 20 characters dummy.
-                        </small>
                     </div>
                 </div>
                 <div>
                     <label for="password">Password</label>
                     <div>
-                        <input th:field="*{password}" type="password" id="password"
+                        <input name="password" type="password" id="password"
                                aria-describedby="passwordHelpInline" placeholder="Password">
-                        <small id="passwordHelpInline" th:if="${#fields.hasErrors()}">
-                            Passwords are between 5 and 20 characters dummy.
-                        </small>
                     </div>
                 </div>
                 <button type="submit">Login</button>
@@ -44,6 +36,6 @@
     </div>
 </main>
 </body>
-<footer th:replace="common/fragments::footer">
+<footer th:replace="~{common/fragments::footer}">
 </footer>
 </html>

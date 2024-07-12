@@ -4,7 +4,9 @@ import com.example.swordo.models.binding.UserLoginBindingModel;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
 import com.example.swordo.models.service.UserServiceModel;
 import com.example.swordo.service.UserService;
+import com.example.swordo.views.UserProfileView;
 import jakarta.validation.Valid;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -46,43 +47,30 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model){
-        if(!model.containsAttribute("isFound")){
-            model.addAttribute("isFound",true);
-        }
+    public String login(){
         return "login";
     }
+    @GetMapping("/login/error")
+    public String logError(){
+        return "login-error";
+    }
 
-    @PostMapping("/login")
-    public String confirmLogin(@Valid UserLoginBindingModel userLoginBindingModel
-            , BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("userLoginBindingModel",userLoginBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
-            return "redirect:login";
-        }
+    @GetMapping("/logout")
+    public String logout(){
+        return "logout";
+    }
 
-        UserServiceModel userServiceModel = userService.findUserByUsernameAndPassword(
-                userLoginBindingModel.getUsername(),userLoginBindingModel.getPassword());
+    @GetMapping("/profile")
+    public String profile(Model model){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserProfileView profileView = userService.getByUsernameForProfile(username);
+        model.addAttribute(username);
 
-        if(userServiceModel == null){
-            redirectAttributes.addFlashAttribute("userLoginBindingModel",userLoginBindingModel);
-            redirectAttributes.addFlashAttribute("isFound",false);
-            return "redirect:login";
-        }
-
-        userService.loginUser(userServiceModel);
-
-        return "redirect:/";
+        return "profile";
     }
 
     @ModelAttribute
     public UserRegisterBindingModel userRegisterBindingModel(){
         return new UserRegisterBindingModel();
-    }
-
-    @ModelAttribute
-    public UserLoginBindingModel userLoginBindingModel(){
-        return new UserLoginBindingModel();
     }
 }

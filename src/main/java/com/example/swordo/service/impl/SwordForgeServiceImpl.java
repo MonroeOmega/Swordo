@@ -53,8 +53,8 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         if(swordForgeRepository.count() != 0){
             return;
         }
-
-        Arrays.stream(SwordTypeEnum.values()).forEach(this::forgeSword);
+        swordService.broken();
+        addSwordSets(1);
     }
 
     @Override
@@ -64,8 +64,14 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         }
         IntStream.range(0, sets)
                 .forEach( check -> Arrays.stream(SwordTypeEnum.values())
-                        .forEach(this::forgeSword));
+                        .forEach(swordTypeEnum -> {
+                            if (swordTypeEnum != SwordTypeEnum.BROKEN_SWORD){
+                                forgeSword(swordTypeEnum);
+                            }
+                        }));
     }
+
+
 
     @Override
     public int price() {

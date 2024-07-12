@@ -3,17 +3,23 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="common/fragments::head">
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
+  <div>
     <div>
-        <h1>Welcome to Swordo</h1>
-        <p> This is the page template which will be used as a base.
-        </p>
+      <h4 sec:authentication="name"></h4>
+      <h4></h4>
+      <h4></h4>
+      <h4></h4>
     </div>
+    <div>
+
+    </div>
+  </div>
 </main>
 </body>
 <footer th:replace="~{common/fragments::footer}">

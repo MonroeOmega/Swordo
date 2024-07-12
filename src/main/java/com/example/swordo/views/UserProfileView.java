@@ -1,23 +1,20 @@
-package com.example.swordo.models.entity;
+package com.example.swordo.views;
 
-import jakarta.persistence.*;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.example.swordo.models.entity.Sword;
+import com.example.swordo.models.entity.SwordTypeEnum;
+import com.example.swordo.models.entity.UserRoleEnum;
 
-@Entity
-@Table(name = "users")
-public class User extends BaseEntity {
+public class UserProfileView {
     private String username;
-    private String password;
     private String email;
-    private UserRoleEnum role;
     private int hitpoints;
     private int coins;
+    private UserRoleEnum role;
     private Sword sword;
 
-    public User() {
+    public UserProfileView() {
     }
 
-    @Column(nullable = false)
     public String getUsername() {
         return username;
     }
@@ -26,16 +23,6 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
-    @Column(nullable = false)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Column(nullable = false)
     public String getEmail() {
         return email;
     }
@@ -44,16 +31,6 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    @Enumerated(EnumType.STRING)
-    public UserRoleEnum getRole() {
-        return role;
-    }
-
-    public void setRole(UserRoleEnum role) {
-        this.role = role;
-    }
-
-    @Column(nullable = false)
     public int getHitpoints() {
         return hitpoints;
     }
@@ -62,7 +39,6 @@ public class User extends BaseEntity {
         this.hitpoints = hitpoints;
     }
 
-    @Column(nullable = false)
     public int getCoins() {
         return coins;
     }
@@ -71,7 +47,14 @@ public class User extends BaseEntity {
         this.coins = coins;
     }
 
-    @OneToOne
+    public UserRoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoleEnum role) {
+        this.role = role;
+    }
+
     public Sword getSword() {
         return sword;
     }
@@ -79,6 +62,4 @@ public class User extends BaseEntity {
     public void setSword(Sword sword) {
         this.sword = sword;
     }
-
-
 }

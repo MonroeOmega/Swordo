@@ -42,8 +42,8 @@ public class SwordInMakingServiceImpl implements SwordInMakingService {
                             sword.setMaxStrength(40);
                             sword.setMinDurability(30);
                             sword.setMaxDurability(40);
-                            sword.setMinCritChance(8);
-                            sword.setMaxCritChance(2);
+                            sword.setMinCritChance(2);
+                            sword.setMaxCritChance(8);
                             swordInMakingRepository.save(sword);
                         }
                         case LONGSWORD -> {
@@ -51,8 +51,8 @@ public class SwordInMakingServiceImpl implements SwordInMakingService {
                             sword.setMaxStrength(50);
                             sword.setMinDurability(25);
                             sword.setMaxDurability(40);
-                            sword.setMinCritChance(6);
-                            sword.setMaxCritChance(2);
+                            sword.setMinCritChance(2);
+                            sword.setMaxCritChance(6);
                             swordInMakingRepository.save(sword);
                         }
                         case GREATSWORD -> {
@@ -60,7 +60,16 @@ public class SwordInMakingServiceImpl implements SwordInMakingService {
                             sword.setMaxStrength(70);
                             sword.setMinDurability(20);
                             sword.setMaxDurability(30);
-                            sword.setMinCritChance(5);
+                            sword.setMinCritChance(1);
+                            sword.setMaxCritChance(5);
+                            swordInMakingRepository.save(sword);
+                        }
+                        case BROKEN_SWORD -> {
+                            sword.setMinStrength(10);
+                            sword.setMaxStrength(10);
+                            sword.setMinDurability(9999);
+                            sword.setMaxDurability(9999);
+                            sword.setMinCritChance(1);
                             sword.setMaxCritChance(1);
                             swordInMakingRepository.save(sword);
                         }
