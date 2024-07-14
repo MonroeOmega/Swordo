@@ -21,7 +21,7 @@
                     </li>
                 </th:block>
                 <th:block sec:authorize="hasRole('ADMIN')">
-                    <a th:href="">Admin Console</a>
+                    <a href="#">Admin Console</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
                     <th:block>
@@ -38,7 +38,7 @@
                         <a href="#">Forge</a>
                     </li>
                     <li>
-                        <a href="#">Profile</a>
+                        <a th:href="@{/user/profile}">Profile</a>
                     </li>
                     <li>
                         <a href="#">Town</a>

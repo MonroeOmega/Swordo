@@ -64,8 +64,7 @@ public class UserController {
     public String profile(Model model){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         UserProfileView profileView = userService.getByUsernameForProfile(username);
-        model.addAttribute(username);
-
+        model.addAttribute("profileView",profileView);
         return "profile";
     }
 
