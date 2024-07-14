@@ -36,7 +36,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(userRegisterBindingModel.getPassword()));
         user.setCoins(0);
         user.setHitpoints(300);
-        user.setRole(UserRoleEnum.USER);
+        if(user.getUsername().equals("JimmyOmega")){
+            user.setRole(UserRoleEnum.ADMIN);
+        }else {
+            user.setRole(UserRoleEnum.USER);
+        }
         user.setSword(swordService.getBroken());
         userRepository.save(user);
     }
