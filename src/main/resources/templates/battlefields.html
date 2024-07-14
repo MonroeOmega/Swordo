@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{common/fragments::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<header th:replace="~{common/fragments::navigation}"></header>
+<main>
+    <div>
+        <div th:each="battlefield : ${battlefields}">
+            <h4 th:text="|Size: ${battlefield.size}|"></h4>
+            <h3 th:text="|Amount of monsters: ${battlefield.monsterCount}|"></h3>
+            <p th:text="|Description: ${battlefield.description}|"></p>
+            <button th:href="@{/battlefields/battlefield/{id}(id = *{battlefield.id})}" > Check it out</button>
+        </div>
+    </div>
+</main>
 </body>
+<footer th:replace="~{common/fragments::footer}">
+</footer>
 </html>

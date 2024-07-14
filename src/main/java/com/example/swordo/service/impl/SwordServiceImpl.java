@@ -38,6 +38,7 @@ public class SwordServiceImpl implements SwordService {
 
     @Override
     public Sword getBroken() {
-        return swordRepository.findFirstByType(SwordTypeEnum.BROKEN_SWORD);
+        broken();
+        return swordRepository.findFirstByTypeOrderByIdDesc(SwordTypeEnum.BROKEN_SWORD);
     }
 }

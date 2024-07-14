@@ -10,4 +10,7 @@ public interface SwordRepository extends JpaRepository<Sword,Long> {
     Sword findFirstById(Long id);
 
     Sword findFirstByType(SwordTypeEnum type);
+
+    Sword findFirstByTypeOrderByIdDesc(SwordTypeEnum type);
+
 }

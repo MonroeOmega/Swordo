@@ -53,7 +53,6 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         if(swordForgeRepository.count() != 0){
             return;
         }
-        swordService.broken();
         addSwordSets(1);
     }
 
