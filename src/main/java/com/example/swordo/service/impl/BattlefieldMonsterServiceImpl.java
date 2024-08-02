@@ -34,7 +34,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         for (int z = 0; z < i; z++){
             BattlefieldMonster battlefieldMonster = new BattlefieldMonster();
             battlefieldMonster.setMonster(monsterService.getMonsters(classs));
-            battlefieldMonster.setCurentHitpoints(battlefieldMonster.getMonster().getMaxHitpoints());
+            battlefieldMonster.setCurrentHitpoints(battlefieldMonster.getMonster().getMaxHitpoints());
             battlefieldMonsters.add(battlefieldMonster);
         }
         return battlefieldMonsters;
@@ -84,7 +84,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findById(id).orElse(null);
         currentBattlefieldMonster.setId(battlefieldMonster.getId());
         currentBattlefieldMonster.setBattlefieldId(battlefieldMonster.getBattlefield().getId());
-        currentBattlefieldMonster.setCurentHitpoints(battlefieldMonster.getCurentHitpoints());
+        currentBattlefieldMonster.setCurrentHitpoints(battlefieldMonster.getCurrentHitpoints());
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
     }
 

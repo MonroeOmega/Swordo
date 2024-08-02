@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "battlefield_monsters")
 public class BattlefieldMonster extends BaseEntity{
-    private Integer curentHitpoints;
+    private Integer currentHitpoints;
     private Monster monster;
     private Battlefield battlefield;
 
@@ -13,12 +13,12 @@ public class BattlefieldMonster extends BaseEntity{
     }
 
     @Column(nullable = false)
-    public Integer getCurentHitpoints() {
-        return curentHitpoints;
+    public Integer getCurrentHitpoints() {
+        return currentHitpoints;
     }
 
-    public void setCurentHitpoints(Integer curentHitpoints) {
-        this.curentHitpoints = curentHitpoints;
+    public void setCurrentHitpoints(Integer currentHitpoints) {
+        this.currentHitpoints = currentHitpoints;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

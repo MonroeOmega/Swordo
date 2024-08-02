@@ -20,8 +20,8 @@
                         <a th:href="@{/user/register}">Register</a>
                     </li>
                 </th:block>
-                <th:block sec:authorize="hasRole('ADMIN')">
-                    <a href="#">Admin Console</a>
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/admin}">Admin Console</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
                     <th:block th:if="${@currentBattlefieldMonster.id == null}">

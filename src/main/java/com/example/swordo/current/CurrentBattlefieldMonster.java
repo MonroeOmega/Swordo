@@ -9,7 +9,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 public class CurrentBattlefieldMonster {
     private Long id;
-    private Integer curentHitpoints;
+    private Integer currentHitpoints;
     private Monster monster;
     private Long battlefieldId;
 
@@ -24,12 +24,12 @@ public class CurrentBattlefieldMonster {
         this.id = id;
     }
 
-    public Integer getCurentHitpoints() {
-        return curentHitpoints;
+    public Integer getCurrentHitpoints() {
+        return currentHitpoints;
     }
 
-    public void setCurentHitpoints(Integer curentHitpoints) {
-        this.curentHitpoints = curentHitpoints;
+    public void setCurrentHitpoints(Integer currentHitpoints) {
+        this.currentHitpoints = currentHitpoints;
     }
 
     public Monster getMonster() {
