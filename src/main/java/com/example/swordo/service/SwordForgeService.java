@@ -15,7 +15,7 @@ public interface SwordForgeService {
 
     void addSwordSets(int sets);
 
-    int price();
+    int price(Sword sword);
 
     List<SwordShopView> shopView();
 }

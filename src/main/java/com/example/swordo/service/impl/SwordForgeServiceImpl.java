@@ -44,7 +44,7 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         SwordForge swordForge = new SwordForge();
         swordForge.setSwordInMaking(swor);
         swordForge.setSword(sword);
-        swordForge.setPrice(price());
+        swordForge.setPrice(price(sword));
         swordForgeRepository.save(swordForge);
     }
 
@@ -79,9 +79,24 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
 
     @Override
-    public int price() {
-        //Make later
-        return 100;
+    public int price(Sword sword) {
+        int price = 100;
+        SwordInMaking swordInMaking = swordInMakingService.getSwordInMakingByType(sword.getType());
+
+        price+= 10 * (sword.getCritChance() - swordInMaking.getMinCritChance());
+        price+= 5 * (sword.getStrength() - swordInMaking.getMinStrength());
+        price+= 2 * (sword.getDurability() - swordInMaking.getMinDurability());
+
+        double modifier = 0.1;
+        switch (sword.getType()){
+            case DAGGER -> modifier = 0.8;
+            case SHORTSWORD -> modifier = 1.0;
+            case LONGSWORD -> modifier = 1.2;
+            case GREATSWORD -> modifier = 1.5;
+        }
+        price = (int) (price * modifier);
+
+        return price;
     }
 
     @Override
