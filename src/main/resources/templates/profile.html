@@ -11,22 +11,19 @@
 <main>
   <div>
     <div>
-      <h4 th:text="|Username: ${profileView.username}|"></h4>
+      <h4 th:text="|Username: ${#authentication.getName()}|"></h4>
     </div>
     <div>
-      <h4 th:text="|Email: ${profileView.email}|"></h4>
+      <h4 th:text="|Email: ${@extraUserData.email}|"></h4>
     </div>
     <div>
-      <h4 th:text="|Role: ${profileView.role}|"></h4>
+      <h4 th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></h4>
     </div>
     <div>
-      <h4 th:text="|Hitpoints: ${profileView.hitpoints}|"></h4>
+      <h4 th:text="|Coins: ${@extraUserData.coins}|"></h4>
     </div>
     <div>
-      <h4 th:text="|Coins: ${profileView.coins}|"></h4>
-    </div>
-    <div>
-      <h4 th:text="|Current sword type: ${profileView.sword.type}|"></h4>
+      <h4 th:text="|Current sword type: ${@extraUserData.sword.type}|"></h4>
     </div>
   </div>
 </main>

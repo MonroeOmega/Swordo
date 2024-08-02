@@ -7,9 +7,7 @@ import com.example.swordo.repository.MonsterRepository;
 import com.example.swordo.service.MonsterService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class MonsterServiceImpl implements MonsterService {

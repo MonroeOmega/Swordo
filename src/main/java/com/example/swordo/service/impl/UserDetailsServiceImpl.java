@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    //Note: Currently part of the user data is loaded separately. Will change that later if the need arises.
     private final UserRepository userRepository;
 
     public UserDetailsServiceImpl(UserRepository userRepository) {

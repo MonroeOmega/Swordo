@@ -11,4 +11,5 @@ public interface MonsterService {
 
     Monster getMonsters(MonsterClassEnum classs);
 
+
 }

@@ -24,14 +24,14 @@
                     <a href="#">Admin Console</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
-                    <th:block>
+                    <th:block th:if="${@currentBattlefieldMonster.id == null}">
                         <li>
                             <a th:href="@{/battlefields}">Battlefields</a>
                         </li>
                     </th:block>
-                    <th:block>
+                    <th:block th:unless="${@currentBattlefieldMonster.id == null}">
                         <li>
-                            <a href="#">Fight</a>
+                            <a th:href="@{/fight}">Fight</a>
                         </li>
                     </th:block>
                     <li>

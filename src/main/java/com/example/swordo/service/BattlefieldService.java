@@ -15,5 +15,7 @@ public interface BattlefieldService{
     List<Battlefield> getAllBattlefields();
 
     List<BattlefieldView> viewAllBattlefields();
+    BattlefieldView viewBattlefield(BattlefieldSizeEnum size);
 
+    Battlefield getBattlefieldById(Long id);
 }

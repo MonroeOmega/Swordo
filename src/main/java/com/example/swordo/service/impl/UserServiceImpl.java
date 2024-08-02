@@ -1,10 +1,9 @@
 package com.example.swordo.service.impl;
 
-import com.example.swordo.current.CurrentUser;
+import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
 import com.example.swordo.models.entity.User;
 import com.example.swordo.models.entity.UserRoleEnum;
-import com.example.swordo.models.service.UserServiceModel;
 import com.example.swordo.repository.UserRepository;
 import com.example.swordo.service.SwordService;
 import com.example.swordo.service.UserService;
@@ -18,14 +17,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final CurrentUser currentUser;
+    private final ExtraUserData extraUserData;
     private final SwordService swordService;
     private final PasswordEncoder encoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, CurrentUser currentUser, SwordService swordService, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ExtraUserData extraUserData, SwordService swordService, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.currentUser = currentUser;
+        this.extraUserData = extraUserData;
         this.swordService = swordService;
         this.encoder = encoder;
     }
@@ -56,16 +55,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void loginUser(UserServiceModel userServiceModel) {
-        currentUser.setUsername(userServiceModel.getUsername());
-        currentUser.setEmail(userServiceModel.getEmail());
-        currentUser.setCoins(userServiceModel.getCoins());
-        currentUser.setRole(userServiceModel.getRole());
-        currentUser.setHitpoints(userServiceModel.getHitpoints());
-        if(userServiceModel.getSword() != null) {
-            currentUser.setSword(swordService.getSword(userServiceModel.getSword().getId()));
-        }
-        currentUser.setId(userServiceModel.getId());
+    public void loadExtraUserData(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        extraUserData.setId(user.getId());
+        extraUserData.setEmail(user.getEmail());
+        extraUserData.setHitpoints(user.getHitpoints());
+        extraUserData.setCoins(user.getCoins());
+        extraUserData.setSword(user.getSword());
     }
 
 

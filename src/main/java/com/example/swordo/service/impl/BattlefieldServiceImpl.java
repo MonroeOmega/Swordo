@@ -75,4 +75,15 @@ public class BattlefieldServiceImpl implements BattlefieldService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public BattlefieldView viewBattlefield(BattlefieldSizeEnum size) {
+        return modelMapper.map(getBattlefield(size), BattlefieldView.class);
+    }
+
+    @Override
+    public Battlefield getBattlefieldById(Long id) {
+        return battlefieldRepository.findById(id)
+                .orElse(null);
+    }
+
 }

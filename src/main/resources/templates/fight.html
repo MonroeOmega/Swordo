@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{common/fragments::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="~{common/fragments::navigation}"></header>
+<main>
+    <div th:if="${@currentBattlefieldMonster.id == null}">
+        <h1>You have somehow gotten to a place where you shouldn't be, unless you are fighting something</h1>
+        <form th:action="@{/}">
+            <input type="submit" value="Go back">
+        </form>
+    </div>
+    <div th:unless="${@currentBattlefieldMonster.id == null}">
+        <div>
+            <h4 th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></h4>
+            <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
+            <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
+            <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
+            <h5 th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
+        </div>
+        <div>
+            <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
+            <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
+            <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
+            <h5 th:text="|Current Hitpoints:${@currentBattlefieldMonster.curentHitpoints}|"></h5>
+            <h5 th:text="|Weakness: ${@currentBattlefieldMonster.monster.weakness}|"></h5>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:replace="~{common/fragments::footer}">
+</footer>
+</html>

@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{common/fragments::head}">
     <meta charset="UTF-8">
-    <title>LOGIN ERROR</title>
+    <title>Title</title>
 </head>
 <body>
-
+<header th:replace="~{common/fragments::navigation}"></header>
+<main>
+    <div>
+        <h1>Login Error</h1>
+    </div>
+</main>
 </body>
+<footer th:replace="~{common/fragments::footer}">
+</footer>
 </html>
