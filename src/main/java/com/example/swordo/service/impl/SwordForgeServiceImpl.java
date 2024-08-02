@@ -8,10 +8,14 @@ import com.example.swordo.repository.SwordForgeRepository;
 import com.example.swordo.service.SwordForgeService;
 import com.example.swordo.service.SwordInMakingService;
 import com.example.swordo.service.SwordService;
+import com.example.swordo.views.SwordShopView;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -19,11 +23,13 @@ public class SwordForgeServiceImpl implements SwordForgeService {
     private final SwordForgeRepository swordForgeRepository;
     private final SwordInMakingService swordInMakingService;
     private final SwordService swordService;
+    private final ModelMapper modelMapper;
 
-    public SwordForgeServiceImpl(SwordForgeRepository swordForgeRepository, SwordInMakingService swordInMakingService, SwordService swordService) {
+    public SwordForgeServiceImpl(SwordForgeRepository swordForgeRepository, SwordInMakingService swordInMakingService, SwordService swordService, ModelMapper modelMapper) {
         this.swordForgeRepository = swordForgeRepository;
         this.swordInMakingService = swordInMakingService;
         this.swordService = swordService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -78,7 +84,14 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         return 100;
     }
 
-
+    @Override
+    public List<SwordShopView> shopView() {
+        return swordForgeRepository
+                .findAll()
+                .stream()
+                .map(sword -> modelMapper.map(sword,SwordShopView.class))
+                .collect(Collectors.toList());
+    }
 
 
 }

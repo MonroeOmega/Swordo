@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{common/fragments::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="~{common/fragments::navigation}"></header>
+<main>
+    <div>
+        <h3>Here are all the available swords:</h3>
+        <div th:each="forgeSword:${forgeSwords}">
+            <h4 th:text="|Type: ${forgeSword.sword.type}|"></h4>
+            <h4 th:text="|Strength: ${forgeSword.sword.strength}|"></h4>
+            <h4 th:text="|Crit Chance: ${forgeSword.sword.critChance}|"></h4>
+            <h4 th:text="|Durability: ${forgeSword.sword.durability}|"></h4>
+            <h4 th:text="|Price: ${forgeSword.price}|"></h4>
+            <form th:action="@{/forge/shop/buy/{id}(id = *{forgeSword.id})}">
+                <input type="submit" value="Buy">
+            </form>
+        </div>
+        <div>
+            <h3>You also get a random sword for 200 coins.</h3>
+            <form th:action="@{/forge/shop/buy/random}">
+                <input type="submit" value="Get Random">
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:replace="~{common/fragments::footer}">
+</footer>
+</html>
