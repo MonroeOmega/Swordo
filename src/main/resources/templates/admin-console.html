@@ -11,6 +11,9 @@
 <main>
     <h1>This is the admin console. Here are all the admin functions.</h1>
     <div>
+        <form th:action="@{/admin/coins}" th:method="post">
+            <input type="submit" value="Get Coins">
+        </form>
     </div>
 </main>
 </body>

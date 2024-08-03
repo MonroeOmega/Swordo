@@ -44,6 +44,7 @@ public class TownController {
 
     @PostMapping("/forge/shop/buy/{id}")
     public String buy(@PathVariable Long id){
+        swordForgeService.buySword(id);
         return "redirect:/town/forge/shop";
     }
 

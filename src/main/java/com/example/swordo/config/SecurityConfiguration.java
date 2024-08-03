@@ -29,6 +29,7 @@ public class SecurityConfiguration{
                     authorize
                             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                             .requestMatchers("/","/user/login","/user/register").anonymous()
+                            .requestMatchers("/admin","/admin/*").hasRole("ADMIN")
                             .requestMatchers("/**").fullyAuthenticated();
                 })
                 .formLogin(form -> {
@@ -42,7 +43,7 @@ public class SecurityConfiguration{
                 .logout(logout -> {
                     logout
                             .logoutUrl("/user/logout")
-                            .logoutSuccessUrl("/user/logout/save")
+                            .logoutSuccessUrl("/")
                             .invalidateHttpSession(true);
                 }).build();
     }

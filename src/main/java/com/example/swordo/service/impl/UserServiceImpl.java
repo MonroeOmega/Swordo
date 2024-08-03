@@ -104,5 +104,10 @@ public class UserServiceImpl implements UserService {
         extraUserData.setHitpoints(300);
     }
 
+    @Override
+    public void adminCoins() {
+        extraUserData.setCoins(extraUserData.getCoins()+1000);
+    }
+
 
 }

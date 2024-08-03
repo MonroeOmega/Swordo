@@ -1,5 +1,6 @@
 package com.example.swordo.service.impl;
 
+import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.models.entity.Sword;
 import com.example.swordo.models.entity.SwordForge;
 import com.example.swordo.models.entity.SwordInMaking;
@@ -24,12 +25,14 @@ public class SwordForgeServiceImpl implements SwordForgeService {
     private final SwordInMakingService swordInMakingService;
     private final SwordService swordService;
     private final ModelMapper modelMapper;
+    private final ExtraUserData extraUserData;
 
-    public SwordForgeServiceImpl(SwordForgeRepository swordForgeRepository, SwordInMakingService swordInMakingService, SwordService swordService, ModelMapper modelMapper) {
+    public SwordForgeServiceImpl(SwordForgeRepository swordForgeRepository, SwordInMakingService swordInMakingService, SwordService swordService, ModelMapper modelMapper, ExtraUserData extraUserData) {
         this.swordForgeRepository = swordForgeRepository;
         this.swordInMakingService = swordInMakingService;
         this.swordService = swordService;
         this.modelMapper = modelMapper;
+        this.extraUserData = extraUserData;
     }
 
     @Override
@@ -105,6 +108,12 @@ public class SwordForgeServiceImpl implements SwordForgeService {
                 .stream()
                 .map(sword -> modelMapper.map(sword,SwordShopView.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void buySword(Long id) {
+        //Note: Has to be changed to remove the sword from the "forge" and add the user id to the sword.
+        extraUserData.setSword(swordForgeRepository.findById(id).orElse(null).getSword());
     }
 
 

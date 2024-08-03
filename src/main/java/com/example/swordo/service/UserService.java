@@ -18,4 +18,6 @@ public interface UserService {
     void saveUserData();
 
     void rest();
+
+    void adminCoins();
 }

@@ -16,4 +16,6 @@ public interface SwordForgeService {
     int price(Sword sword);
 
     List<SwordShopView> shopView();
+
+    void buySword(Long id);
 }
