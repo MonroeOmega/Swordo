@@ -10,6 +10,19 @@
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
     <div>
+        <h3>Current sword</h3>
+        <div>
+            <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
+            <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
+            <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
+            <h5 th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
+        </div>
+        <h3>You could get a random sword for 200 coins.</h3>
+        <div>
+            <form th:action="@{/town/forge/shop/buy/random}">
+                <input type="submit" value="Get Random">
+            </form>
+        </div>
         <h3>Here are all the available swords:</h3>
         <div th:each="forgeSword:${forgeSwords}">
             <h4 th:text="|Type: ${forgeSword.sword.type}|"></h4>
@@ -17,14 +30,8 @@
             <h4 th:text="|Crit Chance: ${forgeSword.sword.critChance}|"></h4>
             <h4 th:text="|Durability: ${forgeSword.sword.durability}|"></h4>
             <h4 th:text="|Price: ${forgeSword.price}|"></h4>
-            <form th:action="@{/forge/shop/buy/{id}(id = *{forgeSword.id})}">
+            <form th:action="@{/town/forge/shop/buy/{id}(id = *{forgeSword.id})}" th:method="post">
                 <input type="submit" value="Buy">
-            </form>
-        </div>
-        <div>
-            <h3>You also get a random sword for 200 coins.</h3>
-            <form th:action="@{/forge/shop/buy/random}">
-                <input type="submit" value="Get Random">
             </form>
         </div>
     </div>

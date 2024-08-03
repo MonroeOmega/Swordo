@@ -9,14 +9,12 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <h3>Welcome to the forge. Here you can purchase, upgrade or fix swords.</h3>
     <div>
-        <div>
-            <a th:href="@{/town/forge/shop}">Click here to buy swords</a>
-        </div>
-        <div>
-            <a th:href="@{/town/forge/upgrade}">Click here to upgrade swords</a>
-        </div>
+        <h1>Welcome to the Town</h1>
+        <p>Here you can rest in order to heal or look for weapons.</p>
+        <a th:action="@{/town/rest}" th:method="post">Rest</a>
+        <a th:href="@{/town/forge}"></a>
+
     </div>
 </main>
 </body>

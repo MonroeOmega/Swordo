@@ -9,8 +9,6 @@ import java.util.List;
 public interface SwordForgeService {
     void forgeSword(SwordTypeEnum type);
 
-    int random(int min, int max);
-
     void initSwords();
 
     void addSwordSets(int sets);

@@ -28,7 +28,7 @@ public class SecurityConfiguration{
                 .authorizeHttpRequests((authorize) ->{
                     authorize
                             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                            .requestMatchers("/","/user/login","/user/register").permitAll()
+                            .requestMatchers("/","/user/login","/user/register").anonymous()
                             .requestMatchers("/**").fullyAuthenticated();
                 })
                 .formLogin(form -> {
@@ -42,7 +42,7 @@ public class SecurityConfiguration{
                 .logout(logout -> {
                     logout
                             .logoutUrl("/user/logout")
-                            .logoutSuccessUrl("/")
+                            .logoutSuccessUrl("/user/logout/save")
                             .invalidateHttpSession(true);
                 }).build();
     }

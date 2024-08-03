@@ -19,7 +19,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     private final MonsterService monsterService;
     private final BattlefieldService battlefieldService;
     private final BattlefieldMonsterRepository battlefieldMonsterRepository;
-    private  final CurrentBattlefieldMonster currentBattlefieldMonster;
+    private final CurrentBattlefieldMonster currentBattlefieldMonster;
 
     public BattlefieldMonsterServiceImpl(MonsterService monsterService, BattlefieldService battlefieldService, BattlefieldMonsterRepository battlefieldMonsterRepository, CurrentBattlefieldMonster currentBattlefieldMonster) {
         this.monsterService = monsterService;
@@ -87,6 +87,5 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         currentBattlefieldMonster.setCurrentHitpoints(battlefieldMonster.getCurrentHitpoints());
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
     }
-
 
 }

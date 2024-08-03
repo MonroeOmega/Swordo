@@ -1,22 +1,22 @@
 package com.example.swordo.controllers;
 
 import com.example.swordo.service.BattlefieldMonsterService;
+import com.example.swordo.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/fight")
 public class FightController {
     private final BattlefieldMonsterService battlefieldMonsterService;
+    private final UserService userService;
 
-    public FightController(BattlefieldMonsterService battlefieldMonsterService) {
+    public FightController(BattlefieldMonsterService battlefieldMonsterService, UserService userService) {
         this.battlefieldMonsterService = battlefieldMonsterService;
+        this.userService = userService;
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     private String loadMonster(@PathVariable Long id){
         battlefieldMonsterService.loadCurrentBattlefieldMonsterData(id);
         return "redirect:/fight";
@@ -25,5 +25,12 @@ public class FightController {
     @GetMapping()
     private String fight(){
         return "fight";
+    }
+
+    @PostMapping("/strike")
+    private String strike(){
+        //Note: This does not work as intended. Page has to reload every time. Find a way to avoid that.
+        userService.strike();
+        return "redirect:/fight";
     }
 }

@@ -1,5 +1,6 @@
 package com.example.swordo.service.impl;
 
+import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
 import com.example.swordo.models.entity.User;
@@ -13,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -20,13 +23,20 @@ public class UserServiceImpl implements UserService {
     private final ExtraUserData extraUserData;
     private final SwordService swordService;
     private final PasswordEncoder encoder;
+    private final CurrentBattlefieldMonster currentBattlefieldMonster;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ExtraUserData extraUserData, SwordService swordService, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ExtraUserData extraUserData, SwordService swordService, PasswordEncoder encoder, CurrentBattlefieldMonster currentBattlefieldMonster) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.extraUserData = extraUserData;
         this.swordService = swordService;
         this.encoder = encoder;
+        this.currentBattlefieldMonster = currentBattlefieldMonster;
+    }
+
+    public int random(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
     }
 
     @Override
@@ -62,6 +72,36 @@ public class UserServiceImpl implements UserService {
         extraUserData.setHitpoints(user.getHitpoints());
         extraUserData.setCoins(user.getCoins());
         extraUserData.setSword(user.getSword());
+    }
+
+    @Override
+    public void strike() {
+        extraUserData.setHitpoints(extraUserData.getHitpoints()
+                -random(currentBattlefieldMonster.getMonster().getMinStrike(),
+                currentBattlefieldMonster.getMonster().getMaxStrike()));
+        int criticalRoll = random(1,100);
+        int damage = extraUserData.getSword().getStrength();
+        if(criticalRoll <= extraUserData.getSword().getCritChance()){
+            damage*=2;
+        }
+        currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints()-damage);
+        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
+    }
+
+    @Override
+    public void saveUserData() {
+        User user =  userRepository.findById(extraUserData.getId()).orElse(null);
+        user.setCoins(extraUserData.getCoins());
+        user.setHitpoints(extraUserData.getHitpoints());
+        user.setSword(extraUserData.getSword());
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void rest() {
+        //Note: Might make it a tad bit more complicated later.
+        extraUserData.setHitpoints(300);
     }
 
 

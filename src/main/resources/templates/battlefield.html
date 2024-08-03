@@ -15,8 +15,8 @@
         <h4>Monsters: </h4>
         <div th:each="monster:${battlefield.battlefieldMonsters}">
             <h3 th:text="|Type: ${monster.monster.classs}|"></h3>
-            <h3 th:text="|Hitpoints: ${monster.curentHitpoints}|"></h3>
-            <form th:action="@{/fight/{id}(id = *{monster.id})}">
+            <h3 th:text="|Hitpoints: ${monster.currentHitpoints}|"></h3>
+            <form th:action="@{/fight/{id}(id = *{monster.id})}" th:method="post">
                 <input type="submit" value="Fight it">
             </form>
         </div>

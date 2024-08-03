@@ -12,4 +12,10 @@ public interface UserService {
     UserProfileView getByUsernameForProfile(String username);
 
     void loadExtraUserData(String username);
+
+    void strike();
+
+    void saveUserData();
+
+    void rest();
 }

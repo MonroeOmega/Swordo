@@ -24,6 +24,13 @@
             <h5 th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
         </div>
         <div>
+            <form th:action="@{/fight/strike}" th:method="post">
+                <input type="submit" value="Strike">
+            </form>
+            <button>Strike with windup</button>
+            <button>Bail</button>
+        </div>
+        <div>
             <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
             <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
             <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
