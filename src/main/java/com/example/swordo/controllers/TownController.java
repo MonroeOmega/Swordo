@@ -20,6 +20,11 @@ public class TownController {
         this.userService = userService;
     }
 
+    @GetMapping
+    private String town(){
+        return "town";
+    }
+
     @PostMapping("/rest")
     public String rest(){
         userService.rest();

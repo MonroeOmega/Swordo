@@ -46,7 +46,7 @@ public class UserController {
     @GetMapping("/login/load")
     public String load(){
         userService.loadExtraUserData(SecurityContextHolder.getContext().getAuthentication().getName());
-        return "redirect:/";
+        return "redirect:/town";
     }
 
     @GetMapping("/login")
