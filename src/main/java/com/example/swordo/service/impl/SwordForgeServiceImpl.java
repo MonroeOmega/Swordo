@@ -9,6 +9,7 @@ import com.example.swordo.repository.SwordForgeRepository;
 import com.example.swordo.service.SwordForgeService;
 import com.example.swordo.service.SwordInMakingService;
 import com.example.swordo.service.SwordService;
+import com.example.swordo.service.UserService;
 import com.example.swordo.views.SwordShopView;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,15 @@ public class SwordForgeServiceImpl implements SwordForgeService {
     private final SwordForgeRepository swordForgeRepository;
     private final SwordInMakingService swordInMakingService;
     private final SwordService swordService;
+    private final UserService userService;
     private final ModelMapper modelMapper;
     private final ExtraUserData extraUserData;
 
-    public SwordForgeServiceImpl(SwordForgeRepository swordForgeRepository, SwordInMakingService swordInMakingService, SwordService swordService, ModelMapper modelMapper, ExtraUserData extraUserData) {
+    public SwordForgeServiceImpl(SwordForgeRepository swordForgeRepository, SwordInMakingService swordInMakingService, SwordService swordService, UserService userService, ModelMapper modelMapper, ExtraUserData extraUserData) {
         this.swordForgeRepository = swordForgeRepository;
         this.swordInMakingService = swordInMakingService;
         this.swordService = swordService;
+        this.userService = userService;
         this.modelMapper = modelMapper;
         this.extraUserData = extraUserData;
     }
@@ -112,8 +115,15 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
     @Override
     public void buySword(Long id) {
-        //Note: Has to be changed to remove the sword from the "forge" and add the user id to the sword.
-        extraUserData.setSword(swordForgeRepository.findById(id).orElse(null).getSword());
+        //Note: The method is turned into commented because a problem arises when trying to
+        //remove a record from "swords" table in the database. Fix later.
+        SwordForge swordForge = swordForgeRepository.findById(id).orElse(null);
+        swordForgeRepository.deleteById(id);
+        extraUserData.setSword(swordForge.getSword());
+        //Note: Can turn negative. Fix later. Maybe try Binding Result.
+        extraUserData.setCoins(extraUserData.getCoins()-swordForge.getPrice());
+        userService.saveUserData();
+        //swordService.discard(swordForge.getSword().getId());
     }
 
 

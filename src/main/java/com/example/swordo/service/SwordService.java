@@ -10,4 +10,6 @@ public interface SwordService {
     void broken();
 
     Sword getBroken();
+
+    void discard(Long id);
 }

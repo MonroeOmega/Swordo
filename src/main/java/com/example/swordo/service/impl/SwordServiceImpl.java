@@ -1,5 +1,6 @@
 package com.example.swordo.service.impl;
 
+import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.models.entity.Sword;
 import com.example.swordo.models.entity.SwordTypeEnum;
 import com.example.swordo.repository.SwordRepository;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 public class SwordServiceImpl implements SwordService {
 
     private final SwordRepository swordRepository;
+    private final ExtraUserData extraUserData;
 
-    public SwordServiceImpl(SwordRepository swordRepository) {
+    public SwordServiceImpl(SwordRepository swordRepository, ExtraUserData extraUserData) {
         this.swordRepository = swordRepository;
+        this.extraUserData = extraUserData;
     }
 
     @Override
@@ -40,5 +43,10 @@ public class SwordServiceImpl implements SwordService {
     public Sword getBroken() {
         broken();
         return swordRepository.findFirstByTypeOrderByIdDesc(SwordTypeEnum.BROKEN_SWORD);
+    }
+
+    @Override
+    public void discard(Long id) {
+        swordRepository.deleteById(id);
     }
 }
