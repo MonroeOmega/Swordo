@@ -30,20 +30,15 @@ public class SwordServiceImpl implements SwordService {
     }
 
     @Override
-    public void broken() {
+    public Sword getBroken() {
         Sword sword = new Sword();
         sword.setType(SwordTypeEnum.BROKEN_SWORD);
         sword.setDurability(9999);
         sword.setCritChance(1);
         sword.setStrength(10);
-        swordRepository.save(sword);
+        return sword;
     }
 
-    @Override
-    public Sword getBroken() {
-        broken();
-        return swordRepository.findFirstByTypeOrderByIdDesc(SwordTypeEnum.BROKEN_SWORD);
-    }
 
     @Override
     public void discard(Long id) {

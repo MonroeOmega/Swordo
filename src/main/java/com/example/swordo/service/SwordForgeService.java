@@ -18,4 +18,6 @@ public interface SwordForgeService {
     List<SwordShopView> shopView();
 
     void buySword(Long id);
+
+    void buyRandom();
 }

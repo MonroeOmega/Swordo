@@ -23,7 +23,7 @@ public class Battlefield extends BaseEntity{
         this.size = size;
     }
 
-    @OneToMany(mappedBy = "battlefield",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "battlefield",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<BattlefieldMonster> getBattlefieldMonsters() {
         return battlefieldMonsters;
     }

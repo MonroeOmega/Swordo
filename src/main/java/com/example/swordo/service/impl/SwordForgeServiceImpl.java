@@ -118,12 +118,18 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         //Note: The method is turned into commented because a problem arises when trying to
         //remove a record from "swords" table in the database. Fix later.
         SwordForge swordForge = swordForgeRepository.findById(id).orElse(null);
+        Long oldId = extraUserData.getSword().getId();
         swordForgeRepository.deleteById(id);
         extraUserData.setSword(swordForge.getSword());
         //Note: Can turn negative. Fix later. Maybe try Binding Result.
         extraUserData.setCoins(extraUserData.getCoins()-swordForge.getPrice());
         userService.saveUserData();
-        //swordService.discard(swordForge.getSword().getId());
+        swordService.discard(oldId);
+    }
+
+    @Override
+    public void buyRandom() {
+        extraUserData.setCoins(extraUserData.getCoins()-200);
     }
 
 

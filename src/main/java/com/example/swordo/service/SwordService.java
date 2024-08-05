@@ -7,8 +7,6 @@ public interface SwordService {
 
     Sword getSword(Long id);
 
-    void broken();
-
     Sword getBroken();
 
     void discard(Long id);

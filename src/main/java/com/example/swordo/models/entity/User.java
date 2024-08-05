@@ -71,7 +71,8 @@ public class User extends BaseEntity {
         this.coins = coins;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "sword_id",referencedColumnName = "id")
     public Sword getSword() {
         return sword;
     }

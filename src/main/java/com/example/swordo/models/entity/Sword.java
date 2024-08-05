@@ -9,6 +9,7 @@ public class Sword extends BaseEntity{
     private Integer strength;
     private Integer durability;
     private Integer critChance;
+    private User user;
 
     public Sword() {
     }
@@ -47,5 +48,14 @@ public class Sword extends BaseEntity{
 
     public void setCritChance(Integer critChance) {
         this.critChance = critChance;
+    }
+
+    @OneToOne(mappedBy = "sword",fetch = FetchType.EAGER)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

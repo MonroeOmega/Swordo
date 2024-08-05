@@ -22,7 +22,6 @@ public class BattlefieldMonster extends BaseEntity{
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
     public Monster getMonster() {
         return monster;
     }
