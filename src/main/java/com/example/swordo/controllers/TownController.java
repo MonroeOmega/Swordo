@@ -48,9 +48,10 @@ public class TownController {
         return "redirect:/town/forge/shop";
     }
 
-    @GetMapping("/forge/shop/buy/random")
+    @PostMapping("/forge/shop/buy/random")
     public String buyRandom(){
-        return "index";
+        swordForgeService.buyRandom();
+        return "redirect:/town/forge/shop";
     }
 
     @GetMapping("/forge/upgrade")

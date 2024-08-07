@@ -37,7 +37,7 @@ public class SecurityConfiguration{
                             .loginPage("/user/login")
                             .usernameParameter("username")
                             .passwordParameter("password")
-                            .defaultSuccessUrl("/user/login/load")
+                            .defaultSuccessUrl("/user/login/load",true)
                             .failureForwardUrl("/user/login/error");
                 })
                 .logout(logout -> {

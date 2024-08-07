@@ -130,6 +130,24 @@ public class SwordForgeServiceImpl implements SwordForgeService {
     @Override
     public void buyRandom() {
         extraUserData.setCoins(extraUserData.getCoins()-200);
+        SwordTypeEnum randType = SwordTypeEnum.random();
+        SwordInMaking swordInMaking = swordInMakingService.getSwordInMakingByType(randType);
+        Sword sword = new Sword();
+        sword.setType(randType);
+        if(sword.getType() == SwordTypeEnum.BROKEN_SWORD) {
+            sword.setStrength(swordInMaking.getMinStrength());
+            sword.setDurability(swordInMaking.getMinDurability());
+            sword.setCritChance(swordInMaking.getMinCritChance());
+            }else{
+            sword.setStrength(random(swordInMaking.getMinStrength(), swordInMaking.getMaxStrength()));
+            sword.setDurability(random(swordInMaking.getMinDurability(), swordInMaking.getMaxDurability()));
+            sword.setCritChance(random(swordInMaking.getMinCritChance(), swordInMaking.getMaxCritChance()));
+        }
+        swordService.saveSword(sword);
+        Long oldId = extraUserData.getId();
+        extraUserData.setSword(sword);
+        userService.saveUserData();
+        swordService.discard(oldId);
     }
 
 
