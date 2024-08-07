@@ -9,8 +9,6 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    UserProfileView getByUsernameForProfile(String username);
-
     void loadExtraUserData(String username);
 
     void strike();
@@ -20,4 +18,6 @@ public interface UserService {
     void rest();
 
     void adminCoins();
+
+    void loot();
 }

@@ -88,4 +88,11 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
     }
 
+    @Override
+    public void disposeOfCurrentMonster() {
+        battlefieldMonsterRepository.deleteById(currentBattlefieldMonster.getId());
+        currentBattlefieldMonster.setId(null);
+    }
+
+
 }

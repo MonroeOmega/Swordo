@@ -12,9 +12,8 @@
     <div>
         <h1>Welcome to the Town</h1>
         <p>Here you can rest in order to heal or look for weapons.</p>
-        <a th:action="@{/town/rest}" th:method="post">Rest</a>
+        <a th:href="@{/town/rest}" th:method="post">Rest (costs 50 coins)</a>
         <a th:href="@{/town/forge}">Go to Forge</a>
-
     </div>
 </main>
 </body>

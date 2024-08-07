@@ -29,8 +29,14 @@ public class FightController {
 
     @PostMapping("/strike")
     private String strike(){
-        //Note: This does not work as intended. Page has to reload every time. Find a way to avoid that.
         userService.strike();
+        return "redirect:/fight";
+    }
+
+    @PostMapping("/loot")
+    private String loot(){
+        userService.loot();
+        battlefieldMonsterService.disposeOfCurrentMonster();
         return "redirect:/fight";
     }
 }

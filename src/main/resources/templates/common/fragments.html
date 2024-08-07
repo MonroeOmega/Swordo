@@ -24,6 +24,10 @@
                     <a th:href="@{/admin}">Admin Console</a>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
+                    <th:block th:if="${@extraUserData.id != null}">
+                            <p th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></p>
+                            <p th:text="|Coins: ${@extraUserData.coins}|"></p>
+                    </th:block>
                     <th:block th:if="${@currentBattlefieldMonster.id == null}">
                         <li>
                             <a th:href="@{/battlefields}">Battlefields</a>

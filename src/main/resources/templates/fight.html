@@ -10,9 +10,9 @@
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
     <div th:if="${@currentBattlefieldMonster.id == null}">
-        <h1>You have somehow gotten to a place where you shouldn't be, unless you are fighting something</h1>
-        <form th:action="@{/}">
-            <input type="submit" value="Go back">
+        <h1>The dimension used to fight monsters is currently empty. You should go back town.</h1>
+        <form th:action="@{/town}">
+            <input type="submit" value="Go back town">
         </form>
     </div>
     <div th:unless="${@currentBattlefieldMonster.id == null}">
@@ -23,14 +23,20 @@
             <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
             <h5 th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
         </div>
-        <div>
+        <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
             <form th:action="@{/fight/strike}" th:method="post">
                 <input type="submit" value="Strike">
             </form>
             <button>Strike with windup</button>
             <button>Bail</button>
         </div>
-        <div>
+        <div th:unless="${@currentBattlefieldMonster.currentHitpoints > 0}">
+            <p>The monster is dead.</p>
+            <form th:action="@{/fight/loot}" th:method="post">
+                <input type="submit" value="Loot it">
+            </form>
+        </div>
+        <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
             <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
             <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
             <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>

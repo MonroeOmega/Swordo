@@ -60,11 +60,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserProfileView getByUsernameForProfile(String username) {
-        return modelMapper.map(userRepository.findByUsername(username),UserProfileView.class);
-    }
-
-    @Override
     public void loadExtraUserData(String username) {
         User user = userRepository.findByUsername(username).orElse(null);
         extraUserData.setId(user.getId());
@@ -95,7 +90,6 @@ public class UserServiceImpl implements UserService {
         user.setHitpoints(extraUserData.getHitpoints());
         user.setSword(extraUserData.getSword());
         userRepository.save(user);
-
     }
 
     @Override
@@ -107,6 +101,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void adminCoins() {
         extraUserData.setCoins(extraUserData.getCoins()+1000);
+    }
+
+    @Override
+    public void loot() {
+        if(currentBattlefieldMonster.getCurrentHitpoints() <= 0){
+            extraUserData.setCoins(extraUserData.getCoins()+100);
+        }
     }
 
 
