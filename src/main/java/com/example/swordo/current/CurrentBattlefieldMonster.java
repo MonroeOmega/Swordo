@@ -12,6 +12,7 @@ public class CurrentBattlefieldMonster {
     private Integer currentHitpoints;
     private Monster monster;
     private Long battlefieldId;
+    private Integer loot;
 
     public CurrentBattlefieldMonster() {
     }
@@ -46,5 +47,13 @@ public class CurrentBattlefieldMonster {
 
     public void setBattlefieldId(Long battlefieldId) {
         this.battlefieldId = battlefieldId;
+    }
+
+    public Integer getLoot() {
+        return loot;
+    }
+
+    public void setLoot(Integer loot) {
+        this.loot = loot;
     }
 }

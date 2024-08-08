@@ -44,7 +44,7 @@ public class BattlefieldServiceImpl implements BattlefieldService {
                         }
                         case BIG -> {
                             battlefield.setDescription("A war was fought here. Only mutated humans and" +
-                                    " gruesome bears can be fought here. Although... You fill like something " +
+                                    " gruesome bears can be fought here. Although... You feel like something " +
                                     " terrible lurks in the shadows of the barren land");
                             battlefieldRepository.save(battlefield);
                         }

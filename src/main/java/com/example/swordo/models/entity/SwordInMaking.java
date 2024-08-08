@@ -16,7 +16,7 @@ public class SwordInMaking extends BaseEntity{
     public SwordInMaking() {
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     public SwordTypeEnum getType() {
         return type;
     }

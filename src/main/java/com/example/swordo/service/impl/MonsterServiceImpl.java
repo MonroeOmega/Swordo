@@ -30,37 +30,47 @@ public class MonsterServiceImpl implements MonsterService {
                     monster.setClasss(mon);
                     switch (mon){
                         case SNAKER -> {
-                            monster.setMaxHitpoints(100);
+                            monster.setMaxHitpoints(200);
                             monster.setWeakness(SwordTypeEnum.DAGGER);
                             monster.setMaxStrike(10);
                             monster.setMinStrike(8);
+                            monster.setMinCoins(50);
+                            monster.setMaxCoins(75);
                             monsterRepository.save(monster);
                         }
                         case BOARER -> {
-                            monster.setMaxHitpoints(150);
+                            monster.setMaxHitpoints(500);
                             monster.setWeakness(SwordTypeEnum.SHORTSWORD);
                             monster.setMaxStrike(15);
                             monster.setMinStrike(12);
+                            monster.setMinCoins(100);
+                            monster.setMaxCoins(125);
                             monsterRepository.save(monster);
                         }
                         case HUMANLIKER -> {
-                            monster.setMaxHitpoints(200);
+                            monster.setMaxHitpoints(1000);
                             monster.setWeakness(SwordTypeEnum.LONGSWORD);
                             monster.setMaxStrike(23);
                             monster.setMinStrike(18);
+                            monster.setMinCoins(125);
+                            monster.setMaxCoins(150);
                             monsterRepository.save(monster);
                         }
                         case BEARER -> {
-                            monster.setMaxHitpoints(300);
+                            monster.setMaxHitpoints(2000);
                             monster.setWeakness(SwordTypeEnum.GREATSWORD);
                             monster.setMaxStrike(40);
                             monster.setMinStrike(30);
+                            monster.setMinCoins(150);
+                            monster.setMaxCoins(200);
                             monsterRepository.save(monster);
                         }
                         case JIMMY_OMEGA -> {
                             monster.setMaxHitpoints(Integer.MAX_VALUE);
                             monster.setMaxStrike(Integer.MAX_VALUE);
                             monster.setMinStrike(Integer.MIN_VALUE);
+                            monster.setMinCoins(Integer.MIN_VALUE);
+                            monster.setMaxCoins(Integer.MAX_VALUE);
                             monsterRepository.save(monster);
                         }
                     }

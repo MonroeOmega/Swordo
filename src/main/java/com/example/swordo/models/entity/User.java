@@ -44,7 +44,7 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     public UserRoleEnum getRole() {
         return role;
     }

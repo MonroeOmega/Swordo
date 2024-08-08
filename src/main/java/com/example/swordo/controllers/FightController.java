@@ -39,4 +39,10 @@ public class FightController {
         battlefieldMonsterService.disposeOfCurrentMonster();
         return "redirect:/fight";
     }
+
+    @PostMapping("/bail")
+    private String bail(){
+        battlefieldMonsterService.returnCurrentMonster();
+        return "redirect:/town";
+    }
 }

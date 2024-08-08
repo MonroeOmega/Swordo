@@ -13,4 +13,6 @@ public interface BattlefieldMonsterService {
     void loadFirstMonsters();
     void loadCurrentBattlefieldMonsterData(Long id);
     void disposeOfCurrentMonster();
+
+    void returnCurrentMonster();
 }

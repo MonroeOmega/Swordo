@@ -14,7 +14,7 @@ public class Battlefield extends BaseEntity{
     public Battlefield() {
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     public BattlefieldSizeEnum getSize() {
         return size;
     }

@@ -28,12 +28,15 @@
                 <input type="submit" value="Strike">
             </form>
             <button>Strike with windup</button>
-            <button>Bail</button>
+            <form th:action="@{/fight/bail}" th:method="post">
+                <input type="submit" value="Bail">
+            </form>
         </div>
         <div th:unless="${@currentBattlefieldMonster.currentHitpoints > 0}">
             <p>The monster is dead.</p>
             <form th:action="@{/fight/loot}" th:method="post">
-                <input type="submit" value="Loot it">
+                <input type="submit" value="Loot it" aria-describedby="loot">
+                <small id="loot" th:text="|(${@currentBattlefieldMonster.loot} monster coins)|"></small>
             </form>
         </div>
         <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">

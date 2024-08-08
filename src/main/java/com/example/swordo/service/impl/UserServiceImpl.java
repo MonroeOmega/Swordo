@@ -79,6 +79,9 @@ public class UserServiceImpl implements UserService {
         if(criticalRoll <= extraUserData.getSword().getCritChance()){
             damage*=2;
         }
+        if(extraUserData.getSword().getType() == currentBattlefieldMonster.getMonster().getWeakness()){
+            damage*=2;
+        }
         currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints()-damage);
         extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
     }
@@ -106,7 +109,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void loot() {
         if(currentBattlefieldMonster.getCurrentHitpoints() <= 0){
-            extraUserData.setCoins(extraUserData.getCoins()+100);
+            extraUserData.setCoins(extraUserData.getCoins()+ currentBattlefieldMonster.getLoot());
+            saveUserData();
         }
     }
 

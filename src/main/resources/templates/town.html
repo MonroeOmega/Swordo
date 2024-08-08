@@ -12,8 +12,12 @@
     <div>
         <h1>Welcome to the Town</h1>
         <p>Here you can rest in order to heal or look for weapons.</p>
-        <a th:href="@{/town/rest}" th:method="post">Rest (costs 50 coins)</a>
-        <a th:href="@{/town/forge}">Go to Forge</a>
+        <form th:action="@{/town/rest}" th:method="post">
+            <input type="submit" value="Rest" aria-describedby="cost"><small id="cost">Costs 50 coins</small>
+        </form>
+        <form th:action="@{/town/forge}">
+            <input type="submit" value="Go to forge">
+        </form>
     </div>
 </main>
 </body>

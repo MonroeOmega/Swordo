@@ -11,6 +11,8 @@ public class Monster extends BaseEntity{
     private Integer maxHitpoints;
     private Integer maxStrike;
     private Integer minStrike;
+    private Integer minCoins;
+    private Integer maxCoins;
     private SwordTypeEnum weakness;
     private List<BattlefieldMonster> battlefieldMonsters;
 
@@ -53,7 +55,7 @@ public class Monster extends BaseEntity{
         this.minStrike = minStrike;
     }
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     public SwordTypeEnum getWeakness() {
         return weakness;
     }
@@ -62,12 +64,30 @@ public class Monster extends BaseEntity{
         this.weakness = weakness;
     }
 
-    @OneToMany(mappedBy = "monster",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "monster",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<BattlefieldMonster> getBattlefieldMonsters() {
         return battlefieldMonsters;
     }
 
     public void setBattlefieldMonsters(List<BattlefieldMonster> battlefieldMonsters) {
         this.battlefieldMonsters = battlefieldMonsters;
+    }
+
+    @Column(nullable = false)
+    public Integer getMinCoins() {
+        return minCoins;
+    }
+
+    public void setMinCoins(Integer minCoins) {
+        this.minCoins = minCoins;
+    }
+
+    @Column(nullable = false)
+    public Integer getMaxCoins() {
+        return maxCoins;
+    }
+
+    public void setMaxCoins(Integer maxCoins) {
+        this.maxCoins = maxCoins;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService {
@@ -26,6 +27,11 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         this.battlefieldService = battlefieldService;
         this.battlefieldMonsterRepository = battlefieldMonsterRepository;
         this.currentBattlefieldMonster = currentBattlefieldMonster;
+    }
+
+    public int random(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
     }
 
     @Override
@@ -86,11 +92,22 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         currentBattlefieldMonster.setBattlefieldId(battlefieldMonster.getBattlefield().getId());
         currentBattlefieldMonster.setCurrentHitpoints(battlefieldMonster.getCurrentHitpoints());
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
+        currentBattlefieldMonster.setLoot(
+                random(battlefieldMonster.getMonster().getMinCoins()
+                        ,battlefieldMonster.getMonster().getMaxCoins()));
     }
 
     @Override
     public void disposeOfCurrentMonster() {
         battlefieldMonsterRepository.deleteById(currentBattlefieldMonster.getId());
+        currentBattlefieldMonster.setId(null);
+    }
+
+    @Override
+    public void returnCurrentMonster() {
+        BattlefieldMonster monster = battlefieldMonsterRepository.findById(currentBattlefieldMonster.getId()).orElse(null);
+        monster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints());
+        battlefieldMonsterRepository.save(monster);
         currentBattlefieldMonster.setId(null);
     }
 
