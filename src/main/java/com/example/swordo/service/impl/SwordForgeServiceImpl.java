@@ -96,8 +96,8 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         switch (sword.getType()){
             case DAGGER -> modifier = 0.8;
             case SHORTSWORD -> modifier = 1.0;
-            case LONGSWORD -> modifier = 1.2;
-            case GREATSWORD -> modifier = 1.5;
+            case LONGSWORD -> modifier = 1.5;
+            case GREATSWORD -> modifier = 2.0;
         }
         price = (int) (price * modifier);
 
@@ -144,7 +144,7 @@ public class SwordForgeServiceImpl implements SwordForgeService {
             sword.setCritChance(random(swordInMaking.getMinCritChance(), swordInMaking.getMaxCritChance()));
         }
         swordService.saveSword(sword);
-        Long oldId = extraUserData.getId();
+        Long oldId = extraUserData.getSword().getId();
         extraUserData.setSword(sword);
         userService.saveUserData();
         swordService.discard(oldId);

@@ -99,7 +99,8 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
 
     @Override
     public void disposeOfCurrentMonster() {
-        battlefieldMonsterRepository.deleteById(currentBattlefieldMonster.getId());
+        Long removalId = currentBattlefieldMonster.getId();
+        battlefieldMonsterRepository.deleteById(removalId);
         currentBattlefieldMonster.setId(null);
     }
 
