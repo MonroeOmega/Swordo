@@ -20,4 +20,6 @@ public interface UserService {
     void adminCoins();
 
     void loot();
+
+    void windup();
 }

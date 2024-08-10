@@ -39,6 +39,18 @@ public class UserServiceImpl implements UserService {
         return random.nextInt(max - min) + min;
     }
 
+    public int calculateDamage(){
+        int criticalRoll = random(1,100);
+        int damage = extraUserData.getSword().getStrength();
+        if(criticalRoll <= extraUserData.getSword().getCritChance()){
+            damage*=2;
+        }
+        if(extraUserData.getSword().getType() == currentBattlefieldMonster.getMonster().getWeakness()){
+            damage*=2;
+        }
+        return damage;
+    }
+
     @Override
     public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
         User user = modelMapper.map(userRegisterBindingModel,User.class);
@@ -74,14 +86,7 @@ public class UserServiceImpl implements UserService {
         extraUserData.setHitpoints(extraUserData.getHitpoints()
                 -random(currentBattlefieldMonster.getMonster().getMinStrike(),
                 currentBattlefieldMonster.getMonster().getMaxStrike()));
-        int criticalRoll = random(1,100);
-        int damage = extraUserData.getSword().getStrength();
-        if(criticalRoll <= extraUserData.getSword().getCritChance()){
-            damage*=2;
-        }
-        if(extraUserData.getSword().getType() == currentBattlefieldMonster.getMonster().getWeakness()){
-            damage*=2;
-        }
+        int damage = calculateDamage();
         currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints()-damage);
         extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
     }
@@ -112,6 +117,19 @@ public class UserServiceImpl implements UserService {
             extraUserData.setCoins(extraUserData.getCoins()+ currentBattlefieldMonster.getLoot());
             saveUserData();
         }
+    }
+
+    @Override
+    public void windup() {
+        extraUserData.setHitpoints(extraUserData.getHitpoints()
+                -random(currentBattlefieldMonster.getMonster().getMinStrike(),
+                currentBattlefieldMonster.getMonster().getMaxStrike()));
+        int wind = random(1,100);
+        if(wind>50) {
+            int damage = calculateDamage()*2;
+            currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
+        }
+        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
     }
 
 

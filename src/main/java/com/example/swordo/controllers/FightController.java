@@ -33,6 +33,12 @@ public class FightController {
         return "redirect:/fight";
     }
 
+    @PostMapping("/strike/windup")
+    private String windup(){
+        userService.windup();
+        return "redirect:/fight";
+    }
+
     @PostMapping("/loot")
     private String loot(){
         userService.loot();

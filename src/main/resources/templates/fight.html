@@ -27,7 +27,9 @@
             <form th:action="@{/fight/strike}" th:method="post">
                 <input type="submit" value="Strike">
             </form>
-            <button>Strike with windup</button>
+            <form th:action="@{/fight/strike/windup}" th:method="post">
+                <input type="submit" value="Strike with windup"><small>50% chance to miss</small>
+            </form>
             <form th:action="@{/fight/bail}" th:method="post">
                 <input type="submit" value="Bail">
             </form>
