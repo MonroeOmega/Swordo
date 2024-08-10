@@ -28,7 +28,7 @@ public class SecurityConfiguration{
                 .authorizeHttpRequests((authorize) ->{
                     authorize
                             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                            .requestMatchers("/","/user/login","/user/register").anonymous()
+                            .requestMatchers("/","/user/login","/user/register","/user/login/error").anonymous()
                             .requestMatchers("/admin","/admin/*").hasRole("ADMIN")
                             .requestMatchers("/**").fullyAuthenticated();
                 })

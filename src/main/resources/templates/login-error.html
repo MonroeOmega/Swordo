@@ -10,7 +10,10 @@
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
     <div>
-        <h1>Login Error</h1>
+        <h1>No such user</h1>
+        <form th:action="@{/user/login}">
+            <input type="submit" value="Go back">
+        </form>
     </div>
 </main>
 </body>
