@@ -14,7 +14,6 @@ public class Monster extends BaseEntity{
     private Integer minCoins;
     private Integer maxCoins;
     private SwordTypeEnum weakness;
-    private List<BattlefieldMonster> battlefieldMonsters;
 
     public Monster() {
     }
@@ -62,15 +61,6 @@ public class Monster extends BaseEntity{
 
     public void setWeakness(SwordTypeEnum weakness) {
         this.weakness = weakness;
-    }
-
-    @OneToMany(mappedBy = "monster",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public List<BattlefieldMonster> getBattlefieldMonsters() {
-        return battlefieldMonsters;
-    }
-
-    public void setBattlefieldMonsters(List<BattlefieldMonster> battlefieldMonsters) {
-        this.battlefieldMonsters = battlefieldMonsters;
     }
 
     @Column(nullable = false)

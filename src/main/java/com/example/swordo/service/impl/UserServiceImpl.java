@@ -89,6 +89,10 @@ public class UserServiceImpl implements UserService {
         int damage = calculateDamage();
         currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints()-damage);
         extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
+        if (extraUserData.getSword().getDurability()<0){
+            extraUserData.setSword(swordService.getBroken());
+            saveUserData();
+        }
     }
 
     @Override

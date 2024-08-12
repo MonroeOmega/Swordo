@@ -115,8 +115,6 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
     @Override
     public void buySword(Long id) {
-        //Note: The method is turned into commented because a problem arises when trying to
-        //remove a record from "swords" table in the database. Fix later.
         SwordForge swordForge = swordForgeRepository.findById(id).orElse(null);
         if(swordForge.getPrice() <= extraUserData.getCoins()){
             Long oldId = extraUserData.getSword().getId();
@@ -185,6 +183,10 @@ public class SwordForgeServiceImpl implements SwordForgeService {
                 extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() + 10);
             }else {
                 extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 5);
+                if(extraUserData.getSword().getDurability() <= 0){
+                    extraUserData.setSword(swordService.getBroken());
+                    userService.saveUserData();
+                }
             }
         }
     }
