@@ -55,7 +55,32 @@ public class TownController {
     }
 
     @GetMapping("/forge/upgrade")
-    public String upgrade(){
+    public String upgrade(Model model){
+        //Note: Make methods to adjust the prices.
+        model.addAttribute("critCost",100);
+        model.addAttribute("upgradableCrit", swordForgeService.upgradableCrit());
+        model.addAttribute("damageCost",100);
+        model.addAttribute("upgradableDamage", swordForgeService.upgradableDamage());
+        model.addAttribute("durabilityCost",100);
+        model.addAttribute("fixable", swordForgeService.fixable());
         return "forge-upgrade";
+    }
+
+    @PostMapping("/forge/upgrade/damage")
+    public String upgradeDamage(){
+        swordForgeService.upgradeDamage();
+        return "redirect:/town/forge/upgrade";
+    }
+
+    @PostMapping("/forge/upgrade/crit")
+    public String upgradeCrit(){
+        swordForgeService.upgradeCrit();
+        return "redirect:/town/forge/upgrade";
+    }
+
+    @PostMapping("/forge/upgrade/durability")
+    public String fix(){
+        swordForgeService.fix();
+        return "redirect:/town/forge/upgrade";
     }
 }

@@ -20,4 +20,16 @@ public interface SwordForgeService {
     void buySword(Long id);
 
     void buyRandom();
+
+    boolean upgradableCrit();
+
+    boolean upgradableDamage();
+
+    boolean fixable();
+
+    void upgradeDamage();
+
+    void fix();
+
+    void upgradeCrit();
 }

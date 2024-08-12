@@ -118,36 +118,82 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         //Note: The method is turned into commented because a problem arises when trying to
         //remove a record from "swords" table in the database. Fix later.
         SwordForge swordForge = swordForgeRepository.findById(id).orElse(null);
-        Long oldId = extraUserData.getSword().getId();
-        swordForgeRepository.deleteById(id);
-        extraUserData.setSword(swordForge.getSword());
-        //Note: Can turn negative. Fix later. Maybe try Binding Result.
-        extraUserData.setCoins(extraUserData.getCoins()-swordForge.getPrice());
-        userService.saveUserData();
-        swordService.discard(oldId);
+        if(swordForge.getPrice() <= extraUserData.getCoins()){
+            Long oldId = extraUserData.getSword().getId();
+            swordForgeRepository.deleteById(id);
+            extraUserData.setSword(swordForge.getSword());
+            extraUserData.setCoins(extraUserData.getCoins() - swordForge.getPrice());
+            userService.saveUserData();
+            swordService.discard(oldId);
+        }
     }
 
     @Override
     public void buyRandom() {
-        extraUserData.setCoins(extraUserData.getCoins()-200);
-        SwordTypeEnum randType = SwordTypeEnum.random();
-        SwordInMaking swordInMaking = swordInMakingService.getSwordInMakingByType(randType);
-        Sword sword = new Sword();
-        sword.setType(randType);
-        if(sword.getType() == SwordTypeEnum.BROKEN_SWORD) {
-            sword.setStrength(swordInMaking.getMinStrength());
-            sword.setDurability(swordInMaking.getMinDurability());
-            sword.setCritChance(swordInMaking.getMinCritChance());
-            }else{
-            sword.setStrength(random(swordInMaking.getMinStrength(), swordInMaking.getMaxStrength()));
-            sword.setDurability(random(swordInMaking.getMinDurability(), swordInMaking.getMaxDurability()));
-            sword.setCritChance(random(swordInMaking.getMinCritChance(), swordInMaking.getMaxCritChance()));
+        if(extraUserData.getCoins() > 200) {
+            extraUserData.setCoins(extraUserData.getCoins() - 200);
+            SwordTypeEnum randType = SwordTypeEnum.random();
+            SwordInMaking swordInMaking = swordInMakingService.getSwordInMakingByType(randType);
+            Sword sword = new Sword();
+            sword.setType(randType);
+            if (sword.getType() == SwordTypeEnum.BROKEN_SWORD) {
+                sword.setStrength(swordInMaking.getMinStrength());
+                sword.setDurability(swordInMaking.getMinDurability());
+                sword.setCritChance(swordInMaking.getMinCritChance());
+            } else {
+                sword.setStrength(random(swordInMaking.getMinStrength(), swordInMaking.getMaxStrength()));
+                sword.setDurability(random(swordInMaking.getMinDurability(), swordInMaking.getMaxDurability()));
+                sword.setCritChance(random(swordInMaking.getMinCritChance(), swordInMaking.getMaxCritChance()));
+            }
+            swordService.saveSword(sword);
+            Long oldId = extraUserData.getSword().getId();
+            extraUserData.setSword(sword);
+            userService.saveUserData();
+            swordService.discard(oldId);
         }
-        swordService.saveSword(sword);
-        Long oldId = extraUserData.getSword().getId();
-        extraUserData.setSword(sword);
+    }
+
+    @Override
+    public boolean upgradableCrit() {
+        return extraUserData.getSword().getCritChance() <= swordInMakingService.getSwordInMakingByType(extraUserData.getSword().getType()).getMaxCritChance();
+    }
+
+    @Override
+    public boolean upgradableDamage() {
+        return extraUserData.getSword().getStrength() <= swordInMakingService.getSwordInMakingByType(extraUserData.getSword().getType()).getMaxStrength();
+    }
+
+    @Override
+    public boolean fixable() {
+
+        SwordTypeEnum type = extraUserData.getSword().getType();
+        return type != SwordTypeEnum.BROKEN_SWORD && extraUserData.getSword().getDurability() <= swordInMakingService.getSwordInMakingByType(type).getMinDurability();
+    }
+
+    @Override
+    public void upgradeDamage() {
+        extraUserData.getSword().setStrength(extraUserData.getSword().getStrength() + 10);
+        extraUserData.setCoins(extraUserData.getCoins()-100);
         userService.saveUserData();
-        swordService.discard(oldId);
+    }
+
+    @Override
+    public void fix() {
+        if(extraUserData.getSword().getType() != SwordTypeEnum.BROKEN_SWORD){
+            int check = random(1,20);
+            if (check >= 11) {
+                extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() + 10);
+            }else {
+                extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 5);
+            }
+        }
+    }
+
+    @Override
+    public void upgradeCrit() {
+        extraUserData.getSword().setCritChance(extraUserData.getSword().getCritChance() + 10);
+        extraUserData.setCoins(extraUserData.getCoins()-100);
+        userService.saveUserData();
     }
 
 

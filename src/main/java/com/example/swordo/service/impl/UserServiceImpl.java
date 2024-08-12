@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void rest() {
-        //Note: Might make it a tad bit more complicated later.
+        extraUserData.setCoins(extraUserData.getCoins()-50);
         extraUserData.setHitpoints(300);
     }
 

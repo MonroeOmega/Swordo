@@ -11,12 +11,12 @@
 <main>
     <h3>Welcome to the forge. Here you can purchase, upgrade or fix swords.</h3>
     <div>
-        <div>
-            <a th:href="@{/town/forge/shop}">Click here to buy swords</a>
-        </div>
-        <div>
-            <a th:href="@{/town/forge/upgrade}">Click here to upgrade swords</a>
-        </div>
+        <form th:action="@{/town/forge/shop}">
+            <input type="submit" value="Shop">
+        </form>
+        <form th:action="@{/town/forge/upgrade}">
+            <input type="submit" value="Reforge">
+        </form>
     </div>
 </main>
 </body>
