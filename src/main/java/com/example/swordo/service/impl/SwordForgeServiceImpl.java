@@ -69,7 +69,7 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
     @Override
     public void addSwordSets(int sets) {
-        if(sets < 0){
+        if(sets <= 0){
             return;
         }
         IntStream.range(0, sets)
@@ -106,6 +106,9 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
     @Override
     public List<SwordShopView> shopView() {
+        if(swordForgeRepository.count() < 4){
+            addSwordSets(2);
+        }
         return swordForgeRepository
                 .findAll()
                 .stream()
@@ -196,6 +199,11 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         extraUserData.getSword().setCritChance(extraUserData.getSword().getCritChance() + 10);
         extraUserData.setCoins(extraUserData.getCoins()-100);
         userService.saveUserData();
+    }
+
+    @Override
+    public long swordsInShop() {
+        return swordForgeRepository.count();
     }
 
 

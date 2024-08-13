@@ -32,4 +32,6 @@ public interface SwordForgeService {
     void fix();
 
     void upgradeCrit();
+
+    long swordsInShop();
 }

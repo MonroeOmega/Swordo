@@ -37,7 +37,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     @Override
     public List<BattlefieldMonster> getNewBattlefieldMonsters(int i, MonsterClassEnum classs) {
         List<BattlefieldMonster> battlefieldMonsters = new ArrayList<>();
-        for (int z = 0; z < i; z++){
+        for (int z = 0; z < i; z++) {
             BattlefieldMonster battlefieldMonster = new BattlefieldMonster();
             battlefieldMonster.setMonster(monsterService.getMonsters(classs));
             battlefieldMonster.setCurrentHitpoints(battlefieldMonster.getMonster().getMaxHitpoints());
@@ -75,9 +75,10 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
                 .getBattlefield(BattlefieldSizeEnum.BIG)));
         battlefieldMonsterRepository.saveAll(battlefieldMonsters);
     }
+
     @Override
     public void loadFirstMonsters() {
-        if (battlefieldMonsterRepository.count() != 0){
+        if (battlefieldMonsterRepository.count() != 0) {
             return;
         }
         populateSmallBattlefield();
@@ -94,7 +95,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
         currentBattlefieldMonster.setLoot(
                 random(battlefieldMonster.getMonster().getMinCoins()
-                        ,battlefieldMonster.getMonster().getMaxCoins()));
+                        , battlefieldMonster.getMonster().getMaxCoins()));
     }
 
     @Override
@@ -106,10 +107,12 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
 
     @Override
     public void returnCurrentMonster() {
-        BattlefieldMonster monster = battlefieldMonsterRepository.findById(currentBattlefieldMonster.getId()).orElse(null);
-        monster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints());
-        battlefieldMonsterRepository.save(monster);
-        currentBattlefieldMonster.setId(null);
+        if (currentBattlefieldMonster.getId() != null) {
+            BattlefieldMonster monster = battlefieldMonsterRepository.findById(currentBattlefieldMonster.getId()).orElse(null);
+            monster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints());
+            battlefieldMonsterRepository.save(monster);
+            currentBattlefieldMonster.setId(null);
+        }
     }
 
 

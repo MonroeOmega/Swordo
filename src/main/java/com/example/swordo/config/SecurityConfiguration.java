@@ -1,5 +1,6 @@
 package com.example.swordo.config;
 
+import com.example.swordo.service.impl.CustomLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +17,13 @@ public class SecurityConfiguration{
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder encoder;
 
+    private final CustomLogoutHandler logoutHandler;
 
-    public SecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder encoder) {
+
+    public SecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder encoder, CustomLogoutHandler logoutHandler) {
         this.userDetailsService = userDetailsService;
         this.encoder = encoder;
+        this.logoutHandler = logoutHandler;
     }
 
     @Bean
@@ -43,6 +47,7 @@ public class SecurityConfiguration{
                 .logout(logout -> {
                     logout
                             .logoutUrl("/user/logout")
+                            .addLogoutHandler(logoutHandler)
                             .logoutSuccessUrl("/")
                             .invalidateHttpSession(true);
                 }).build();

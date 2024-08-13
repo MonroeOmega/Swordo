@@ -8,13 +8,16 @@ import com.example.swordo.models.entity.UserRoleEnum;
 import com.example.swordo.repository.UserRepository;
 import com.example.swordo.service.SwordService;
 import com.example.swordo.service.UserService;
+import com.example.swordo.views.AdminUsersView;
 import com.example.swordo.views.UserProfileView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -134,6 +137,15 @@ public class UserServiceImpl implements UserService {
             currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
         }
         extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
+    }
+
+    @Override
+    public List<AdminUsersView> adminView() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(user -> modelMapper.map(user, AdminUsersView.class))
+                .toList();
     }
 
 

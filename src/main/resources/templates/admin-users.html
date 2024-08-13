@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{common/fragments::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="~{common/fragments::navigation}"></header>
+<main>
+    <div>
+        <h1>Users</h1>
+        <div>
+            <div th:each="user:${users}">
+                <p th:text="|User: ${user.username}, Email: ${user.email}, Role: ${user.role}|" ></p>
+                <p th:text="|Hitpoints: ${user.hitpoints}, Coins: ${user.coins}|"></p>
+                <p th:text="|Sword Type: ${user.sword.type}, Strength: ${user.sword.strength}, Crit Chance: ${user.sword.critChance}, Durability: ${user.sword.durability}|"></p>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:replace="~{common/fragments::footer}">
+</footer>
+</html>

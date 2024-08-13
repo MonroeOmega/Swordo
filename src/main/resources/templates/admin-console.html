@@ -11,8 +11,17 @@
 <main>
     <h1>This is the admin console. Here are all the admin functions.</h1>
     <div>
+        <h3 th:text="|Current Coins: ${@extraUserData.coins}|"></h3>
         <form th:action="@{/admin/coins}" th:method="post">
             <input type="submit" value="Get Coins">
+        </form>
+        <h3 th:text="|Current Swords in Shop: ${swordCount}|"></h3>
+        <form th:action="@{/admin/add_swords}" th:method="post">
+            <input type="submit" value="Add more swords">
+        </form>
+        <h3>Users:</h3>
+        <form th:action="@{/admin/users}">
+            <input type="submit" value="Check them">
         </form>
     </div>
 </main>

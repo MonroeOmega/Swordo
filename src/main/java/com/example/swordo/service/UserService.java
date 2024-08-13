@@ -2,7 +2,10 @@ package com.example.swordo.service;
 
 import com.example.swordo.models.binding.UserRegisterBindingModel;
 import com.example.swordo.models.entity.User;
+import com.example.swordo.views.AdminUsersView;
 import com.example.swordo.views.UserProfileView;
+
+import java.util.List;
 
 public interface UserService {
     void registerUser(UserRegisterBindingModel userRegisterBindingModel);
@@ -22,4 +25,6 @@ public interface UserService {
     void loot();
 
     void windup();
+
+    List<AdminUsersView> adminView();
 }
