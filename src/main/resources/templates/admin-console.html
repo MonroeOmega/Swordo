@@ -23,6 +23,19 @@
         <form th:action="@{/admin/users}">
             <input type="submit" value="Check them">
         </form>
+        <h3>Get a Maxed out Sword</h3>
+        <form th:action="@{/admin/sword}" th:method="post" th:object="${admin_sword}">
+            <select th:field="*{type}">
+                <option th:each="swordType : ${T(com.example.swordo.models.entity.SwordTypeEnum).values()}"
+                        th:text="${swordType}" th:value="${swordType}"></option>
+            </select>
+            <input type="submit"  value="Get Sword">
+        </form>
+        <h3>Loose Swords:</h3>
+        <h4 th:text="${loose_sword_count}"></h4>
+        <form th:action="@{/admin/clean}" th:method="post">
+            <input type="submit" value="Clean up">
+        </form>
     </div>
 </main>
 </body>

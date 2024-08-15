@@ -34,4 +34,10 @@ public interface SwordForgeService {
     void upgradeCrit();
 
     long swordsInShop();
+
+    void adminSword(SwordTypeEnum swordType);
+
+    long getLooseSwordCount();
+
+    void adminRemoveLooseSwords();
 }

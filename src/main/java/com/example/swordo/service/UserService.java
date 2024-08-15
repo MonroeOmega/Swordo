@@ -27,4 +27,8 @@ public interface UserService {
     void windup();
 
     List<AdminUsersView> adminView();
+
+    long userCount();
+
+    List<Long> userSwordIds();
 }

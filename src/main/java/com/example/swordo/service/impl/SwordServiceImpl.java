@@ -7,6 +7,8 @@ import com.example.swordo.repository.SwordRepository;
 import com.example.swordo.service.SwordService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SwordServiceImpl implements SwordService {
 
@@ -43,5 +45,20 @@ public class SwordServiceImpl implements SwordService {
     @Override
     public void discard(Long id) {
         swordRepository.deleteById(id);
+    }
+
+    @Override
+    public long swordCount() {
+        return swordRepository.count();
+    }
+
+    @Override
+    public void adminDelete(List<Long> ids) {
+        swordRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public List<Sword> getAll() {
+        return swordRepository.findAll();
     }
 }

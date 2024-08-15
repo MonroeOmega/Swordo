@@ -14,6 +14,7 @@ import com.example.swordo.views.SwordShopView;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -204,6 +205,39 @@ public class SwordForgeServiceImpl implements SwordForgeService {
     @Override
     public long swordsInShop() {
         return swordForgeRepository.count();
+    }
+
+    @Override
+    public void adminSword(SwordTypeEnum swordType) {
+        SwordInMaking swor = swordInMakingService.getSwordInMakingByType(swordType);
+        Sword sword = new Sword();
+        sword.setType(swor.getType());
+        sword.setDurability(swor.getMaxDurability());
+        sword.setStrength(swor.getMaxStrength());
+        sword.setCritChance(swor.getMaxCritChance());
+        extraUserData.setSword(sword);
+        userService.saveUserData();
+    }
+
+    @Override
+    public long getLooseSwordCount() {
+         long count = 0;
+         count = swordService.swordCount() - swordForgeRepository.count() - userService.userCount();
+        return count;
+    }
+
+    @Override
+    public void adminRemoveLooseSwords() {
+        List<Long> ids = new ArrayList<>();
+        swordForgeRepository.findAll().forEach(user -> ids.add(user.getSword().getId()));
+        ids.addAll(userService.userSwordIds());
+        List<Long> theIds = new ArrayList<>();
+        swordService.getAll().forEach(sword -> {
+            if(!ids.contains(sword.getId())){
+                theIds.add(sword.getId());
+            }
+        });
+        swordService.adminDelete(theIds);
     }
 
 

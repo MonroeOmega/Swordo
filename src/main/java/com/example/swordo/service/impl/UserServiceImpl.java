@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -146,6 +147,18 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(user -> modelMapper.map(user, AdminUsersView.class))
                 .toList();
+    }
+
+    @Override
+    public long userCount() {
+        return userRepository.count();
+    }
+
+    @Override
+    public List<Long> userSwordIds() {
+        List<Long> ids = new ArrayList<>();
+        userRepository.findAll().forEach(user -> ids.add(user.getSword().getId()));
+        return ids;
     }
 
 
