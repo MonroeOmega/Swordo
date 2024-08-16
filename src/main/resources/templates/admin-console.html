@@ -36,6 +36,23 @@
         <form th:action="@{/admin/clean}" th:method="post">
             <input type="submit" value="Clean up">
         </form>
+        <h3>Add monsters:</h3>
+        <form th:action="@{/admin/monsters}" th:method="post" th:object="${admin_monsters}">
+            <select th:field="*{battlefieldSizeEnum}">
+                <option th:each="size : ${T(com.example.swordo.models.entity.BattlefieldSizeEnum).values()}"
+                        th:text="${size}" th:value="${size}"></option>
+            </select>
+            <input type="submit"  value="Add monsters">
+        </form>
+        <h3>Add Jimmy Omega (Bad idea tho):</h3>
+        <form th:action="@{/admin/jimmyomega}" th:method="post" th:object="${admin_monsters}">
+            <select th:field="*{battlefieldSizeEnum}">
+                <option th:each="size : ${T(com.example.swordo.models.entity.BattlefieldSizeEnum).values()}"
+                        th:text="${size}" th:value="${size}"></option>
+            </select>
+            <input type="submit"  value="Add Jimmy Omega">
+            <p>This moves him from nothingness to a battlefield, or from a battlefield to another battlefield.</p>
+        </form>
     </div>
 </main>
 </body>

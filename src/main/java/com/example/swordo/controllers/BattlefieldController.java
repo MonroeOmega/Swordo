@@ -1,6 +1,6 @@
 package com.example.swordo.controllers;
 
-import com.example.swordo.models.entity.BattlefieldSizeEnum;
+import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.BattlefieldService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/battlefields")
 public class BattlefieldController {
     private final BattlefieldService battlefieldService;
+    private final BattlefieldMonsterService battlefieldMonsterService;
 
-    public BattlefieldController(BattlefieldService battlefieldService) {
+    public BattlefieldController(BattlefieldService battlefieldService, BattlefieldMonsterService battlefieldMonsterService) {
         this.battlefieldService = battlefieldService;
+        this.battlefieldMonsterService = battlefieldMonsterService;
     }
 
     @GetMapping
@@ -25,7 +27,9 @@ public class BattlefieldController {
 
     @GetMapping("/battlefield/{id}")
     private String battlefield(Model model, @PathVariable Long id){
-        model.addAttribute("battlefield",battlefieldService.getBattlefieldById(id));
+        model.addAttribute("monsters",battlefieldMonsterService.viewMonsters(id));
+        model.addAttribute("battlefieldData",battlefieldService.viewBattlefield(id));
+        model.addAttribute("theId", battlefieldMonsterService.checkForHisId());
         return "battlefield";
     }
 

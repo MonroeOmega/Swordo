@@ -3,16 +3,20 @@ package com.example.swordo.service.impl;
 import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.models.entity.BattlefieldMonster;
 import com.example.swordo.models.entity.BattlefieldSizeEnum;
+import com.example.swordo.models.entity.Monster;
 import com.example.swordo.models.entity.MonsterClassEnum;
 import com.example.swordo.repository.BattlefieldMonsterRepository;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.BattlefieldService;
 import com.example.swordo.service.MonsterService;
+import com.example.swordo.views.MonsterView;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService {
@@ -21,12 +25,14 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     private final BattlefieldService battlefieldService;
     private final BattlefieldMonsterRepository battlefieldMonsterRepository;
     private final CurrentBattlefieldMonster currentBattlefieldMonster;
+    private final ModelMapper modelMapper;
 
-    public BattlefieldMonsterServiceImpl(MonsterService monsterService, BattlefieldService battlefieldService, BattlefieldMonsterRepository battlefieldMonsterRepository, CurrentBattlefieldMonster currentBattlefieldMonster) {
+    public BattlefieldMonsterServiceImpl(MonsterService monsterService, BattlefieldService battlefieldService, BattlefieldMonsterRepository battlefieldMonsterRepository, CurrentBattlefieldMonster currentBattlefieldMonster, ModelMapper modelMapper) {
         this.monsterService = monsterService;
         this.battlefieldService = battlefieldService;
         this.battlefieldMonsterRepository = battlefieldMonsterRepository;
         this.currentBattlefieldMonster = currentBattlefieldMonster;
+        this.modelMapper = modelMapper;
     }
 
     public int random(int min, int max) {
@@ -91,11 +97,15 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findById(id).orElse(null);
         currentBattlefieldMonster.setId(battlefieldMonster.getId());
         currentBattlefieldMonster.setBattlefieldId(battlefieldMonster.getBattlefield().getId());
-        currentBattlefieldMonster.setCurrentHitpoints(battlefieldMonster.getCurrentHitpoints());
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
-        currentBattlefieldMonster.setLoot(
-                random(battlefieldMonster.getMonster().getMinCoins()
-                        , battlefieldMonster.getMonster().getMaxCoins()));
+        currentBattlefieldMonster.setCurrentHitpoints(battlefieldMonster.getCurrentHitpoints());
+        if(battlefieldMonster.getMonster().getClasss() != MonsterClassEnum.JIMMY_OMEGA) {;
+            currentBattlefieldMonster.setLoot(
+                    random(battlefieldMonster.getMonster().getMinCoins()
+                            , battlefieldMonster.getMonster().getMaxCoins()));
+        }else{
+            currentBattlefieldMonster.setLoot(999999);
+        }
     }
 
     @Override
@@ -113,6 +123,46 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
             battlefieldMonsterRepository.save(monster);
             currentBattlefieldMonster.setId(null);
         }
+    }
+
+    @Override
+    public void adminAddMonsters(BattlefieldSizeEnum battlefieldSizeEnum) {
+        switch (battlefieldSizeEnum){
+            case BIG -> populateBigBattlefield();
+            case MEDIUM -> populateMediumBattlefield();
+            case SMALL -> populateSmallBattlefield();
+        }
+    }
+
+    @Override
+    public List<MonsterView> viewMonsters(Long id) {
+        return battlefieldService
+                .getBattlefieldById(id)
+                .getBattlefieldMonsters()
+                .stream()
+                .map(monster -> modelMapper.map(monster, MonsterView.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addJimmyOmega(BattlefieldSizeEnum battlefieldSizeEnum) {
+        battlefieldMonsterRepository.deleteBattlefieldMonsterByMonster_Id(5L);
+        Monster monster = monsterService.getMonsters(MonsterClassEnum.JIMMY_OMEGA);
+        BattlefieldMonster battlefieldMonster = new BattlefieldMonster();
+        battlefieldMonster.setMonster(monster);
+        battlefieldMonster.setCurrentHitpoints(monster.getMaxHitpoints());
+        battlefieldMonster.setBattlefield(battlefieldService.getBattlefield(battlefieldSizeEnum));
+        battlefieldMonsterRepository.save(battlefieldMonster);
+    }
+
+    @Override
+    public boolean checkForHim() {
+        return currentBattlefieldMonster.getMonster().getClasss() == MonsterClassEnum.JIMMY_OMEGA;
+    }
+
+    @Override
+    public long checkForHisId() {
+        return battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L).getId();
     }
 
 

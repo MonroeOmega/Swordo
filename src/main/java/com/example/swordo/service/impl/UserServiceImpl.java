@@ -3,6 +3,7 @@ package com.example.swordo.service.impl;
 import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
+import com.example.swordo.models.entity.MonsterClassEnum;
 import com.example.swordo.models.entity.User;
 import com.example.swordo.models.entity.UserRoleEnum;
 import com.example.swordo.repository.UserRepository;
@@ -87,13 +88,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void strike() {
-        extraUserData.setHitpoints(extraUserData.getHitpoints()
-                -random(currentBattlefieldMonster.getMonster().getMinStrike(),
-                currentBattlefieldMonster.getMonster().getMaxStrike()));
-        int damage = calculateDamage();
-        currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints()-damage);
-        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
-        if (extraUserData.getSword().getDurability()<0){
+        if(currentBattlefieldMonster.getMonster().getClasss() != MonsterClassEnum.JIMMY_OMEGA) {
+            extraUserData.setHitpoints(extraUserData.getHitpoints()
+                    - random(currentBattlefieldMonster.getMonster().getMinStrike(),
+                    currentBattlefieldMonster.getMonster().getMaxStrike()));
+            int damage = calculateDamage();
+            currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
+        }
+        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
+        if (extraUserData.getSword().getDurability()<= 0){
             extraUserData.setSword(swordService.getBroken());
             saveUserData();
         }

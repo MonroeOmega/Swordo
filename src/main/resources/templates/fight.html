@@ -43,9 +43,12 @@
         </div>
         <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
             <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
-            <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
-            <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
-            <h5 th:text="|Current Hitpoints:${@currentBattlefieldMonster.currentHitpoints}|"></h5>
+            <h5 th:unless="${IsItHim}" th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
+            <h5 th:unless="${IsItHim}" th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
+            <h5 th:unless="${IsItHim}" th:text="|Current Hitpoints:${@currentBattlefieldMonster.currentHitpoints}|"></h5>
+            <h5 th:if="${IsItHim}">Max Strike: 0</h5>
+            <h5 th:if="${IsItHim}">Min Strike: 0</h5>
+            <h5 th:if="${IsItHim}">Current Hitpoints: 0</h5>
         </div>
     </div>
 </main>

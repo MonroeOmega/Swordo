@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BattlefieldMonsterRepository extends JpaRepository<BattlefieldMonster, Long> {
+    void deleteBattlefieldMonsterByMonster_Id(Long id);
+    BattlefieldMonster findBattlefieldMonsterByMonster_Id(Long id);
 }

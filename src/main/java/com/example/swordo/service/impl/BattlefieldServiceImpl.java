@@ -76,8 +76,8 @@ public class BattlefieldServiceImpl implements BattlefieldService {
     }
 
     @Override
-    public BattlefieldView viewBattlefield(BattlefieldSizeEnum size) {
-        return modelMapper.map(getBattlefield(size), BattlefieldView.class);
+    public BattlefieldView viewBattlefield(Long id) {
+        return modelMapper.map(getBattlefieldById(id), BattlefieldView.class);
     }
 
     @Override

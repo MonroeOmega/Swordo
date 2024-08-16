@@ -3,6 +3,7 @@ package com.example.swordo.controllers;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -23,7 +24,8 @@ public class FightController {
     }
 
     @GetMapping()
-    private String fight(){
+    private String fight(Model model){
+        model.addAttribute("IsItHim",battlefieldMonsterService.checkForHim());
         return "fight";
     }
 
