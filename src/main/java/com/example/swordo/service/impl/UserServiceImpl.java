@@ -44,27 +44,27 @@ public class UserServiceImpl implements UserService {
         return random.nextInt(max - min) + min;
     }
 
-    public int calculateDamage(){
-        int criticalRoll = random(1,100);
+    public int calculateDamage() {
+        int criticalRoll = random(1, 100);
         int damage = extraUserData.getSword().getStrength();
-        if(criticalRoll <= extraUserData.getSword().getCritChance()){
-            damage*=2;
+        if (criticalRoll <= extraUserData.getSword().getCritChance()) {
+            damage *= 2;
         }
-        if(extraUserData.getSword().getType() == currentBattlefieldMonster.getMonster().getWeakness()){
-            damage*=2;
+        if (extraUserData.getSword().getType() == currentBattlefieldMonster.getMonster().getWeakness()) {
+            damage *= 2;
         }
         return damage;
     }
 
     @Override
     public void registerUser(UserRegisterBindingModel userRegisterBindingModel) {
-        User user = modelMapper.map(userRegisterBindingModel,User.class);
+        User user = modelMapper.map(userRegisterBindingModel, User.class);
         user.setPassword(encoder.encode(userRegisterBindingModel.getPassword()));
         user.setCoins(0);
         user.setHitpoints(300);
-        if(user.getUsername().equals("JimmyOmega")){
+        if (user.getUsername().equals("JimmyOmega")) {
             user.setRole(UserRoleEnum.ADMIN);
-        }else {
+        } else {
             user.setRole(UserRoleEnum.USER);
         }
         user.setSword(swordService.getBroken());
@@ -88,15 +88,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void strike() {
-        if(currentBattlefieldMonster.getMonster().getClasss() != MonsterClassEnum.JIMMY_OMEGA) {
-            extraUserData.setHitpoints(extraUserData.getHitpoints()
-                    - random(currentBattlefieldMonster.getMonster().getMinStrike(),
-                    currentBattlefieldMonster.getMonster().getMaxStrike()));
-            int damage = calculateDamage();
-            currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
-        }
+        extraUserData.setHitpoints(extraUserData.getHitpoints()
+                - random(currentBattlefieldMonster.getMonster().getMinStrike(),
+                currentBattlefieldMonster.getMonster().getMaxStrike()));
+        int damage = calculateDamage();
+        currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
         extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
-        if (extraUserData.getSword().getDurability()<= 0){
+        if (extraUserData.getSword().getDurability() <= 0) {
             extraUserData.setSword(swordService.getBroken());
             saveUserData();
         }
@@ -104,7 +102,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUserData() {
-        User user =  userRepository.findById(extraUserData.getId()).orElse(null);
+        User user = userRepository.findById(extraUserData.getId()).orElse(null);
         user.setCoins(extraUserData.getCoins());
         user.setHitpoints(extraUserData.getHitpoints());
         user.setSword(extraUserData.getSword());
@@ -113,19 +111,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void rest() {
-        extraUserData.setCoins(extraUserData.getCoins()-50);
+        extraUserData.setCoins(extraUserData.getCoins() - 50);
         extraUserData.setHitpoints(300);
     }
 
     @Override
     public void adminCoins() {
-        extraUserData.setCoins(extraUserData.getCoins()+1000);
+        extraUserData.setCoins(extraUserData.getCoins() + 1000);
     }
 
     @Override
     public void loot() {
-        if(currentBattlefieldMonster.getCurrentHitpoints() <= 0){
-            extraUserData.setCoins(extraUserData.getCoins()+ currentBattlefieldMonster.getLoot());
+        if (currentBattlefieldMonster.getCurrentHitpoints() <= 0) {
+            extraUserData.setCoins(extraUserData.getCoins() + currentBattlefieldMonster.getLoot());
             saveUserData();
         }
     }
@@ -133,14 +131,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void windup() {
         extraUserData.setHitpoints(extraUserData.getHitpoints()
-                -random(currentBattlefieldMonster.getMonster().getMinStrike(),
+                - random(currentBattlefieldMonster.getMonster().getMinStrike(),
                 currentBattlefieldMonster.getMonster().getMaxStrike()));
-        int wind = random(1,100);
-        if(wind>50) {
-            int damage = calculateDamage()*2;
+        int wind = random(1, 100);
+        if (wind > 50) {
+            int damage = calculateDamage() * 2;
             currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
         }
-        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability()-1);
+        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
     }
 
     @Override
@@ -162,6 +160,19 @@ public class UserServiceImpl implements UserService {
         List<Long> ids = new ArrayList<>();
         userRepository.findAll().forEach(user -> ids.add(user.getSword().getId()));
         return ids;
+    }
+
+    @Override
+    public void strikeHim() {
+        int durabilityRow = random(1,20);
+        int healthRow = random(1,20);
+        if(durabilityRow == 14){
+            extraUserData.setSword(swordService.getBroken());
+            saveUserData();
+        }
+        if(healthRow == 14){
+            extraUserData.setHitpoints(0);
+        }
     }
 
 

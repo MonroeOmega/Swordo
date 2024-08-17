@@ -147,7 +147,6 @@ public class SwordForgeServiceImpl implements SwordForgeService {
                 sword.setDurability(random(swordInMaking.getMinDurability(), swordInMaking.getMaxDurability()));
                 sword.setCritChance(random(swordInMaking.getMinCritChance(), swordInMaking.getMaxCritChance()));
             }
-            swordService.saveSword(sword);
             Long oldId = extraUserData.getSword().getId();
             extraUserData.setSword(sword);
             userService.saveUserData();
@@ -215,8 +214,10 @@ public class SwordForgeServiceImpl implements SwordForgeService {
         sword.setDurability(swor.getMaxDurability());
         sword.setStrength(swor.getMaxStrength());
         sword.setCritChance(swor.getMaxCritChance());
+        Long oldId = extraUserData.getSword().getId();
         extraUserData.setSword(sword);
         userService.saveUserData();
+        swordService.discard(oldId);
     }
 
     @Override

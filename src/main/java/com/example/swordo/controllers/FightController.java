@@ -41,6 +41,12 @@ public class FightController {
         return "redirect:/fight";
     }
 
+    @PostMapping("/strike/him")
+    private String strikeHim(){
+        userService.strikeHim();
+        return "redirect:/fight";
+    }
+
     @PostMapping("/loot")
     private String loot(){
         userService.loot();

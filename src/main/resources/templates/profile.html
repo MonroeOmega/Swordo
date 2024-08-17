@@ -24,6 +24,9 @@
     </div>
     <div>
       <h4 th:text="|Current sword type: ${@extraUserData.sword.type}|"></h4>
+      <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
+      <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
+      <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}" th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
     </div>
   </div>
 </main>

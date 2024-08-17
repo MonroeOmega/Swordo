@@ -21,14 +21,17 @@
             <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
             <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
             <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
-            <h5 th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
+            <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}" th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
         </div>
         <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
-            <form th:action="@{/fight/strike}" th:method="post">
+            <form th:if="${!IsItHim}" th:action="@{/fight/strike}" th:method="post">
                 <input type="submit" value="Strike">
             </form>
-            <form th:action="@{/fight/strike/windup}" th:method="post">
+            <form th:if="${!IsItHim}" th:action="@{/fight/strike/windup}" th:method="post">
                 <input type="submit" value="Strike with windup"><small>50% chance to miss</small>
+            </form>
+            <form th:if="${IsItHim}" th:action="@{/fight/strike/him}" th:method="post">
+                <input type="submit" value="Strike Him"><small>You could only harm yourself</small>
             </form>
             <form th:action="@{/fight/bail}" th:method="post">
                 <input type="submit" value="Bail">
@@ -41,11 +44,14 @@
                 <small id="loot" th:text="|(${@currentBattlefieldMonster.loot} monster coins)|"></small>
             </form>
         </div>
-        <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
+        <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0 and !IsItHim}" >
             <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
-            <h5 th:unless="${IsItHim}" th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
-            <h5 th:unless="${IsItHim}" th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
-            <h5 th:unless="${IsItHim}" th:text="|Current Hitpoints:${@currentBattlefieldMonster.currentHitpoints}|"></h5>
+            <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
+            <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
+            <h5 th:text="|Current Hitpoints:${@currentBattlefieldMonster.currentHitpoints}|"></h5>
+        </div>
+        <div th:if="${IsItHim}">
+            <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
             <h5 th:if="${IsItHim}">Max Strike: 0</h5>
             <h5 th:if="${IsItHim}">Min Strike: 0</h5>
             <h5 th:if="${IsItHim}">Current Hitpoints: 0</h5>

@@ -53,6 +53,10 @@
             <input type="submit"  value="Add Jimmy Omega">
             <p>This moves him from nothingness to a battlefield, or from a battlefield to another battlefield.</p>
         </form>
+        <h3 th:if="${IsHeHere}">Persuade Jimmy Omega to leave</h3>
+        <form th:if="${IsHeHere}" th:action="@{/admin/persuade}" th:method="post">
+            <input type="submit"  value="Persuade Him"><small>He wouldn't really go away tho.</small>
+        </form>
     </div>
 </main>
 </body>

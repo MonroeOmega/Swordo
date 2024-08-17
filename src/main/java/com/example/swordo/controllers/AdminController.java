@@ -31,6 +31,7 @@ public class AdminController {
         model.addAttribute("admin_sword", new AdminSwordBindingModel());
         model.addAttribute("loose_sword_count", forgeService.getLooseSwordCount());
         model.addAttribute("admin_monsters",new AdminBattlefieldBindingModel());
+        model.addAttribute("IsHeHere",battlefieldMonsterService.checkBattlefields());
         return "admin-console";
     }
 
@@ -73,6 +74,12 @@ public class AdminController {
     @PostMapping("/jimmyomega")
     private String addJimmyOmega(AdminBattlefieldBindingModel adminBattlefieldBindingModel){
         battlefieldMonsterService.addJimmyOmega(adminBattlefieldBindingModel.getBattlefieldSizeEnum());
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/persuade")
+    private String persuade(){
+        battlefieldMonsterService.giveHimSomeCheese();
         return "redirect:/admin";
     }
 

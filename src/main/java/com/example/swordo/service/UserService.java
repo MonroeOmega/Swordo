@@ -31,4 +31,6 @@ public interface UserService {
     long userCount();
 
     List<Long> userSwordIds();
+
+    void strikeHim();
 }

@@ -21,4 +21,6 @@ public interface BattlefieldMonsterService {
     void addJimmyOmega(BattlefieldSizeEnum battlefieldSizeEnum);
     boolean checkForHim();
     long checkForHisId();
+    void giveHimSomeCheese();
+    boolean checkBattlefields();
 }

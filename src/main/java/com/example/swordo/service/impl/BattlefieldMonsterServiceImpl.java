@@ -165,5 +165,15 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
         return battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L).getId();
     }
 
+    @Override
+    public void giveHimSomeCheese() {
+        battlefieldMonsterRepository.deleteById(checkForHisId());
+    }
+
+    @Override
+    public boolean checkBattlefields() {
+        return battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L) != null;
+    }
+
 
 }

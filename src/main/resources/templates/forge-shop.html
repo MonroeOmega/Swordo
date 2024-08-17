@@ -15,7 +15,7 @@
             <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
             <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
             <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
-            <h5 th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
+            <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}" th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
         </div>
         <h3>You could get a random sword for 200 coins.</h3>
         <div>
