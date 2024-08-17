@@ -119,7 +119,8 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     public void returnCurrentMonster() {
         if (currentBattlefieldMonster.getId() != null) {
             BattlefieldMonster monster = battlefieldMonsterRepository.findById(currentBattlefieldMonster.getId()).orElse(null);
-            monster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints());
+            int hitpoints = currentBattlefieldMonster.getCurrentHitpoints() + ((currentBattlefieldMonster.getMonster().getMaxHitpoints() - currentBattlefieldMonster.getCurrentHitpoints())/2);
+            monster.setCurrentHitpoints(hitpoints);
             battlefieldMonsterRepository.save(monster);
             currentBattlefieldMonster.setId(null);
         }

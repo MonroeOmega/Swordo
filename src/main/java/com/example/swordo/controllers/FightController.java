@@ -1,5 +1,6 @@
 package com.example.swordo.controllers;
 
+import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class FightController {
     private final BattlefieldMonsterService battlefieldMonsterService;
     private final UserService userService;
+    private final ExtraUserData extraUserData;
 
-    public FightController(BattlefieldMonsterService battlefieldMonsterService, UserService userService) {
+    public FightController(BattlefieldMonsterService battlefieldMonsterService, UserService userService, ExtraUserData extraUserData) {
         this.battlefieldMonsterService = battlefieldMonsterService;
         this.userService = userService;
+        this.extraUserData = extraUserData;
     }
 
     @PostMapping("/{id}")
@@ -26,6 +29,10 @@ public class FightController {
     @GetMapping()
     private String fight(Model model){
         model.addAttribute("IsItHim",battlefieldMonsterService.checkForHim());
+        if(extraUserData.getHitpoints() == 0){
+            //Note: Business logic should not here. Look for a better way.
+            return "redirect:/fight/death";
+        }
         return "fight";
     }
 
@@ -58,5 +65,11 @@ public class FightController {
     private String bail(){
         battlefieldMonsterService.returnCurrentMonster();
         return "redirect:/town";
+    }
+
+    @GetMapping("/death")
+    private String death(){
+        userService.processDeath();
+        return "death";
     }
 }

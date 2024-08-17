@@ -3,14 +3,13 @@ package com.example.swordo.service.impl;
 import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
-import com.example.swordo.models.entity.MonsterClassEnum;
 import com.example.swordo.models.entity.User;
 import com.example.swordo.models.entity.UserRoleEnum;
 import com.example.swordo.repository.UserRepository;
+import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.SwordService;
 import com.example.swordo.service.UserService;
 import com.example.swordo.views.AdminUsersView;
-import com.example.swordo.views.UserProfileView;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,14 +27,16 @@ public class UserServiceImpl implements UserService {
     private final SwordService swordService;
     private final PasswordEncoder encoder;
     private final CurrentBattlefieldMonster currentBattlefieldMonster;
+    private final BattlefieldMonsterService battlefieldMonsterService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ExtraUserData extraUserData, SwordService swordService, PasswordEncoder encoder, CurrentBattlefieldMonster currentBattlefieldMonster) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ExtraUserData extraUserData, SwordService swordService, PasswordEncoder encoder, CurrentBattlefieldMonster currentBattlefieldMonster, BattlefieldMonsterService battlefieldMonsterService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.extraUserData = extraUserData;
         this.swordService = swordService;
         this.encoder = encoder;
         this.currentBattlefieldMonster = currentBattlefieldMonster;
+        this.battlefieldMonsterService = battlefieldMonsterService;
     }
 
     public int random(int min, int max) {
@@ -98,6 +98,10 @@ public class UserServiceImpl implements UserService {
             extraUserData.setSword(swordService.getBroken());
             saveUserData();
         }
+        if(extraUserData.getHitpoints()<= 0){
+            extraUserData.setHitpoints(0);
+            battlefieldMonsterService.returnCurrentMonster();
+        }
     }
 
     @Override
@@ -112,7 +116,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void rest() {
         extraUserData.setCoins(extraUserData.getCoins() - 50);
+        if(currentBattlefieldMonster.getId() != null){
+            int hitpoints = currentBattlefieldMonster.getCurrentHitpoints() + ((currentBattlefieldMonster.getMonster().getMaxHitpoints() - currentBattlefieldMonster.getCurrentHitpoints())/2);
+            currentBattlefieldMonster.setCurrentHitpoints(hitpoints);
+        }
         extraUserData.setHitpoints(300);
+        saveUserData();
     }
 
     @Override
@@ -139,6 +148,10 @@ public class UserServiceImpl implements UserService {
             currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
         }
         extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
+        if(extraUserData.getHitpoints()<= 0){
+            extraUserData.setHitpoints(0);
+            battlefieldMonsterService.returnCurrentMonster();
+        }
     }
 
     @Override
@@ -172,6 +185,18 @@ public class UserServiceImpl implements UserService {
         }
         if(healthRow == 14){
             extraUserData.setHitpoints(0);
+            battlefieldMonsterService.returnCurrentMonster();
+        }
+    }
+
+    @Override
+    public void processDeath() {
+        if(extraUserData.getHitpoints() == 0) {
+            extraUserData.setHitpoints(1);
+            if (extraUserData.getCoins() < 50) {
+                extraUserData.setCoins(50);
+            }
+            saveUserData();
         }
     }
 

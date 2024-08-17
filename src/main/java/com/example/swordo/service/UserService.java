@@ -33,4 +33,6 @@ public interface UserService {
     List<Long> userSwordIds();
 
     void strikeHim();
+
+    void processDeath();
 }
