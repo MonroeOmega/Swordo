@@ -1,6 +1,7 @@
 package com.example.swordo.service.impl;
 
 import com.example.swordo.current.ExtraUserData;
+import com.example.swordo.exceptions.SwordAlreadyBoughtException;
 import com.example.swordo.models.entity.Sword;
 import com.example.swordo.models.entity.SwordForge;
 import com.example.swordo.models.entity.SwordInMaking;
@@ -119,7 +120,7 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
     @Override
     public void buySword(Long id) {
-        SwordForge swordForge = swordForgeRepository.findById(id).orElse(null);
+        SwordForge swordForge = swordForgeRepository.findById(id).orElseThrow(SwordAlreadyBoughtException::new);
         if(swordForge.getPrice() <= extraUserData.getCoins()){
             Long oldId = extraUserData.getSword().getId();
             swordForgeRepository.deleteById(id);

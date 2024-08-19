@@ -1,13 +1,12 @@
 package com.example.swordo.controllers;
 
+import com.example.swordo.exceptions.SwordAlreadyBoughtException;
 import com.example.swordo.service.SwordForgeService;
 import com.example.swordo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/town")
@@ -46,6 +45,13 @@ public class TownController {
     public String buy(@PathVariable Long id){
         swordForgeService.buySword(id);
         return "redirect:/town/forge/shop";
+    }
+
+    @ExceptionHandler({SwordAlreadyBoughtException.class})
+    public ModelAndView handleShopException(SwordAlreadyBoughtException e){
+        ModelAndView modelAndView = new ModelAndView("known-errors");
+        modelAndView.addObject("reason",e.getMessage());
+        return modelAndView;
     }
 
     @PostMapping("/forge/shop/buy/random")

@@ -17,8 +17,8 @@
     </div>
     <div th:unless="${@extraUserData.getHitpoints() > 1}">
         <h1>You have died</h1>
-        <p>A greater force does not want you out of the picture, so it brings you back to the brink of death</p>
-        <p th:if="${@extraUserData.getCoins() < 50}">It also gives you some coins to patch yourself up</p>
+        <p>A greater force doesn't want you out of the picture, so it brings you back to the brink of death</p>
+        <p th:if="${@extraUserData.getCoins() == 50}">It also gives you some coins to patch yourself up</p>
         <form th:action="@{/town}">
             <input type="submit" value="Go back town">
         </form>

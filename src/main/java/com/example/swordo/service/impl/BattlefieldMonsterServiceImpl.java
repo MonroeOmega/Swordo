@@ -1,6 +1,7 @@
 package com.example.swordo.service.impl;
 
 import com.example.swordo.current.CurrentBattlefieldMonster;
+import com.example.swordo.exceptions.MonsterMissingException;
 import com.example.swordo.models.entity.BattlefieldMonster;
 import com.example.swordo.models.entity.BattlefieldSizeEnum;
 import com.example.swordo.models.entity.Monster;
@@ -94,7 +95,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
 
     @Override
     public void loadCurrentBattlefieldMonsterData(Long id) {
-        BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findById(id).orElse(null);
+        BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findById(id).orElseThrow(MonsterMissingException::new);
         currentBattlefieldMonster.setId(battlefieldMonster.getId());
         currentBattlefieldMonster.setBattlefieldId(battlefieldMonster.getBattlefield().getId());
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
