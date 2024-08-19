@@ -1,5 +1,6 @@
 package com.example.swordo.service.impl;
 
+import com.example.swordo.exceptions.BattlefieldNotFoundException;
 import com.example.swordo.models.entity.Battlefield;
 import com.example.swordo.models.entity.BattlefieldSizeEnum;
 import com.example.swordo.repository.BattlefieldRepository;
@@ -83,7 +84,7 @@ public class BattlefieldServiceImpl implements BattlefieldService {
     @Override
     public Battlefield getBattlefieldById(Long id) {
         return battlefieldRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(BattlefieldNotFoundException::new);
     }
 
 }

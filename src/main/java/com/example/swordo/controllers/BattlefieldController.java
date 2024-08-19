@@ -1,9 +1,11 @@
 package com.example.swordo.controllers;
 
+import com.example.swordo.exceptions.BattlefieldNotFoundException;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.BattlefieldService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,12 @@ public class BattlefieldController {
         model.addAttribute("battlefieldData",battlefieldService.viewBattlefield(id));
         model.addAttribute("theId", battlefieldMonsterService.checkForHisId());
         return "battlefield";
+    }
+
+    @ExceptionHandler({BattlefieldNotFoundException.class})
+    private String handleBattlefield(BattlefieldNotFoundException e, Model model){
+        model.addAttribute("reason", e.getMessage());
+        return "access-errors";
     }
 
 }
