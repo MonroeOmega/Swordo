@@ -23,4 +23,5 @@ public interface BattlefieldMonsterService {
     long checkForHisId();
     void giveHimSomeCheese();
     boolean checkBattlefields();
+    void checkForCheekines();
 }

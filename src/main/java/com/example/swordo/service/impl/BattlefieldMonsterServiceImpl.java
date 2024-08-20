@@ -1,6 +1,7 @@
 package com.example.swordo.service.impl;
 
 import com.example.swordo.current.CurrentBattlefieldMonster;
+import com.example.swordo.exceptions.CheekyException;
 import com.example.swordo.exceptions.MonsterMissingException;
 import com.example.swordo.models.entity.BattlefieldMonster;
 import com.example.swordo.models.entity.BattlefieldSizeEnum;
@@ -175,6 +176,13 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     @Override
     public boolean checkBattlefields() {
         return battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L) != null;
+    }
+
+    @Override
+    public void checkForCheekines() {
+        if(currentBattlefieldMonster.getId() != null){
+            throw new CheekyException();
+        }
     }
 
 

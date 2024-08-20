@@ -1,6 +1,7 @@
 package com.example.swordo.controllers;
 
 import com.example.swordo.exceptions.BattlefieldNotFoundException;
+import com.example.swordo.exceptions.CheekyException;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.BattlefieldService;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class BattlefieldController {
     @GetMapping
     private String battlefields(Model model){
         model.addAttribute("battlefields",battlefieldService.viewAllBattlefields());
+        battlefieldMonsterService.checkForCheekines();
         return "battlefields";
     }
 
@@ -32,6 +34,7 @@ public class BattlefieldController {
         model.addAttribute("monsters",battlefieldMonsterService.viewMonsters(id));
         model.addAttribute("battlefieldData",battlefieldService.viewBattlefield(id));
         model.addAttribute("theId", battlefieldMonsterService.checkForHisId());
+        battlefieldMonsterService.checkForCheekines();
         return "battlefield";
     }
 
@@ -39,6 +42,11 @@ public class BattlefieldController {
     private String handleBattlefield(BattlefieldNotFoundException e, Model model){
         model.addAttribute("reason", e.getMessage());
         return "access-errors";
+    }
+
+    @ExceptionHandler({CheekyException.class})
+    private String handleCheekines(){
+        return "redirect:/fight";
     }
 
 }
