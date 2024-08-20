@@ -2,6 +2,7 @@ package com.example.swordo.service.impl;
 
 import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.current.ExtraUserData;
+import com.example.swordo.exceptions.DeathException;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
 import com.example.swordo.models.entity.User;
 import com.example.swordo.models.entity.UserRoleEnum;
@@ -101,6 +102,7 @@ public class UserServiceImpl implements UserService {
         if(extraUserData.getHitpoints()<= 0){
             extraUserData.setHitpoints(0);
             battlefieldMonsterService.returnCurrentMonster();
+            throw new DeathException();
         }
     }
 
@@ -151,6 +153,7 @@ public class UserServiceImpl implements UserService {
         if(extraUserData.getHitpoints()<= 0){
             extraUserData.setHitpoints(0);
             battlefieldMonsterService.returnCurrentMonster();
+            throw new DeathException();
         }
     }
 
@@ -186,6 +189,7 @@ public class UserServiceImpl implements UserService {
         if(healthRow == 14){
             extraUserData.setHitpoints(0);
             battlefieldMonsterService.returnCurrentMonster();
+            throw new DeathException();
         }
     }
 

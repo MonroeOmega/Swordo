@@ -1,6 +1,7 @@
 package com.example.swordo.controllers;
 
 import com.example.swordo.current.ExtraUserData;
+import com.example.swordo.exceptions.DeathException;
 import com.example.swordo.exceptions.MonsterMissingException;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.UserService;
@@ -13,12 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class FightController {
     private final BattlefieldMonsterService battlefieldMonsterService;
     private final UserService userService;
-    private final ExtraUserData extraUserData;
 
-    public FightController(BattlefieldMonsterService battlefieldMonsterService, UserService userService, ExtraUserData extraUserData) {
+    public FightController(BattlefieldMonsterService battlefieldMonsterService, UserService userService) {
         this.battlefieldMonsterService = battlefieldMonsterService;
         this.userService = userService;
-        this.extraUserData = extraUserData;
     }
 
     @PostMapping("/{id}")
@@ -36,10 +35,6 @@ public class FightController {
     @GetMapping()
     private String fight(Model model){
         model.addAttribute("IsItHim",battlefieldMonsterService.checkForHim());
-        if(extraUserData.getHitpoints() == 0){
-            //Note: Business logic should not here. Look for a better way.
-            return "redirect:/fight/death";
-        }
         return "fight";
     }
 
@@ -61,6 +56,12 @@ public class FightController {
         return "redirect:/fight";
     }
 
+    @ExceptionHandler({DeathException.class})
+    private String death(){
+        userService.processDeath();
+        return "death";
+    }
+
     @PostMapping("/loot")
     private String loot(){
         userService.loot();
@@ -72,11 +73,5 @@ public class FightController {
     private String bail(){
         battlefieldMonsterService.returnCurrentMonster();
         return "redirect:/town";
-    }
-
-    @GetMapping("/death")
-    private String death(){
-        userService.processDeath();
-        return "death";
     }
 }
