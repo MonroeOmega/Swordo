@@ -35,4 +35,5 @@ public interface UserService {
     void strikeHim();
 
     void processDeath();
+
 }

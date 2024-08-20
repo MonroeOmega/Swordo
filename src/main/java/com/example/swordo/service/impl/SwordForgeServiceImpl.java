@@ -149,6 +149,7 @@ public class SwordForgeServiceImpl implements SwordForgeService {
                 sword.setCritChance(random(swordInMaking.getMinCritChance(), swordInMaking.getMaxCritChance()));
             }
             Long oldId = extraUserData.getSword().getId();
+            swordService.saveSword(sword);
             extraUserData.setSword(sword);
             userService.saveUserData();
             swordService.discard(oldId);

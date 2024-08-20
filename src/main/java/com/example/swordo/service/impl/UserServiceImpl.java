@@ -4,6 +4,7 @@ import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.exceptions.DeathException;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
+import com.example.swordo.models.entity.Sword;
 import com.example.swordo.models.entity.User;
 import com.example.swordo.models.entity.UserRoleEnum;
 import com.example.swordo.repository.UserRepository;
@@ -94,11 +95,7 @@ public class UserServiceImpl implements UserService {
                 currentBattlefieldMonster.getMonster().getMaxStrike()));
         int damage = calculateDamage();
         currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
-        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
-        if (extraUserData.getSword().getDurability() <= 0) {
-            extraUserData.setSword(swordService.getBroken());
-            saveUserData();
-        }
+        chipSword();
         if(extraUserData.getHitpoints()<= 0){
             extraUserData.setHitpoints(0);
             battlefieldMonsterService.returnCurrentMonster();
@@ -149,11 +146,23 @@ public class UserServiceImpl implements UserService {
             int damage = calculateDamage() * 2;
             currentBattlefieldMonster.setCurrentHitpoints(currentBattlefieldMonster.getCurrentHitpoints() - damage);
         }
-        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
+        chipSword();
         if(extraUserData.getHitpoints()<= 0){
             extraUserData.setHitpoints(0);
             battlefieldMonsterService.returnCurrentMonster();
             throw new DeathException();
+        }
+    }
+
+    private void chipSword() {
+        extraUserData.getSword().setDurability(extraUserData.getSword().getDurability() - 1);
+        if (extraUserData.getSword().getDurability() <= 0) {
+            Sword sword = swordService.getBroken();
+            Long oldId = extraUserData.getSword().getId();
+            swordService.saveSword(sword);
+            extraUserData.setSword(sword);
+            saveUserData();
+            swordService.discard(oldId);
         }
     }
 
@@ -183,8 +192,12 @@ public class UserServiceImpl implements UserService {
         int durabilityRow = random(1,20);
         int healthRow = random(1,20);
         if(durabilityRow == 14){
-            extraUserData.setSword(swordService.getBroken());
+            Sword sword = swordService.getBroken();
+            Long oldId = extraUserData.getSword().getId();
+            swordService.saveSword(sword);
+            extraUserData.setSword(sword);
             saveUserData();
+            swordService.discard(oldId);
         }
         if(healthRow == 14){
             extraUserData.setHitpoints(0);
