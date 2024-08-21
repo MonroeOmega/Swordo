@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class BattlefieldMonster extends BaseEntity{
     private Integer currentHitpoints;
     private Monster monster;
+    private boolean engaged;
     private Battlefield battlefield;
 
     public BattlefieldMonster() {
@@ -37,5 +38,14 @@ public class BattlefieldMonster extends BaseEntity{
 
     public void setBattlefield(Battlefield battlefield) {
         this.battlefield = battlefield;
+    }
+
+    @Column(nullable = false)
+    public boolean isEngaged() {
+        return engaged;
+    }
+
+    public void setEngaged(boolean engaged) {
+        this.engaged = engaged;
     }
 }

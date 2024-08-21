@@ -2,6 +2,7 @@ package com.example.swordo.service.impl;
 
 import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.exceptions.CheekyException;
+import com.example.swordo.exceptions.MonsterAlreadyEngagedException;
 import com.example.swordo.exceptions.MonsterMissingException;
 import com.example.swordo.models.entity.BattlefieldMonster;
 import com.example.swordo.models.entity.BattlefieldSizeEnum;
@@ -49,6 +50,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
             BattlefieldMonster battlefieldMonster = new BattlefieldMonster();
             battlefieldMonster.setMonster(monsterService.getMonsters(classs));
             battlefieldMonster.setCurrentHitpoints(battlefieldMonster.getMonster().getMaxHitpoints());
+            battlefieldMonster.setEngaged(false);
             battlefieldMonsters.add(battlefieldMonster);
         }
         return battlefieldMonsters;
@@ -97,6 +99,11 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     @Override
     public void loadCurrentBattlefieldMonsterData(Long id) {
         BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findById(id).orElseThrow(MonsterMissingException::new);
+        if(battlefieldMonster.isEngaged()){
+            throw new MonsterAlreadyEngagedException();
+        }
+        battlefieldMonster.setEngaged(true);
+        battlefieldMonsterRepository.save(battlefieldMonster);
         currentBattlefieldMonster.setId(battlefieldMonster.getId());
         currentBattlefieldMonster.setBattlefieldId(battlefieldMonster.getBattlefield().getId());
         currentBattlefieldMonster.setMonster(battlefieldMonster.getMonster());
@@ -123,6 +130,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
             BattlefieldMonster monster = battlefieldMonsterRepository.findById(currentBattlefieldMonster.getId()).orElse(null);
             int hitpoints = currentBattlefieldMonster.getCurrentHitpoints() + ((currentBattlefieldMonster.getMonster().getMaxHitpoints() - currentBattlefieldMonster.getCurrentHitpoints())/2);
             monster.setCurrentHitpoints(hitpoints);
+            monster.setEngaged(false);
             battlefieldMonsterRepository.save(monster);
             currentBattlefieldMonster.setId(null);
         }
@@ -143,6 +151,7 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
                 .getBattlefieldById(id)
                 .getBattlefieldMonsters()
                 .stream()
+                .filter(monster -> !monster.isEngaged())
                 .map(monster -> modelMapper.map(monster, MonsterView.class))
                 .collect(Collectors.toList());
     }
@@ -165,7 +174,11 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
 
     @Override
     public long checkForHisId() {
-        return battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L).getId();
+        BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L);
+        if(battlefieldMonster != null){
+            return battlefieldMonster.getId();
+        }
+        return 0L;
     }
 
     @Override

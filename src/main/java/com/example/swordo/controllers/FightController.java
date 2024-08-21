@@ -2,6 +2,7 @@ package com.example.swordo.controllers;
 
 import com.example.swordo.current.ExtraUserData;
 import com.example.swordo.exceptions.DeathException;
+import com.example.swordo.exceptions.MonsterAlreadyEngagedException;
 import com.example.swordo.exceptions.MonsterMissingException;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.UserService;
@@ -24,6 +25,12 @@ public class FightController {
     private String loadMonster(@PathVariable Long id){
         battlefieldMonsterService.loadCurrentBattlefieldMonsterData(id);
         return "redirect:/fight";
+    }
+
+    @ExceptionHandler({MonsterAlreadyEngagedException.class})
+    private String monsterEngaged(MonsterAlreadyEngagedException e, Model model){
+        model.addAttribute("reason",e.getMessage());
+        return "known-errors";
     }
 
     @ExceptionHandler({MonsterMissingException.class})
