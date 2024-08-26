@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="login-body">
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
     <div>
         <div>
             <h1><strong>Login</strong></h1>
+            <h2 th:if="${error}" th:text="${reason}"></h2>
         </div>
         <div>
             <form th:action="@{/user/login}" th:method="POST">
@@ -18,19 +19,18 @@
                     <label for="username">Username</label>
                     <div>
                         <input name="username" type="text" id="username"
-                               aria-describedby="usernameHelpInline" placeholder="Username">
+                               placeholder="Username">
                     </div>
                 </div>
                 <div>
                     <label for="password">Password</label>
                     <div>
                         <input name="password" type="password" id="password"
-                               aria-describedby="passwordHelpInline" placeholder="Password">
+                               placeholder="Password">
                     </div>
                 </div>
                 <button type="submit">Login</button>
             </form>
-            <hr class="bg-light">
         </div>
     </div>
 </main>

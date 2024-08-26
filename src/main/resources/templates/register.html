@@ -10,6 +10,7 @@
     <div>
         <div>
             <h1><strong>Register</strong></h1>
+            <h2 th:if="${error}" th:text="${reason}"></h2>
         </div>
         <div>
             <form th:action="@{/user/register}" th:method="POST" th:object="${userRegisterBindingModel}">

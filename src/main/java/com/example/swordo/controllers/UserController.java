@@ -1,16 +1,16 @@
 package com.example.swordo.controllers;
 
+import com.example.swordo.exceptions.EmailAlreadyExistsException;
+import com.example.swordo.exceptions.UsernameAlreadyExistsException;
 import com.example.swordo.models.binding.UserRegisterBindingModel;
 import com.example.swordo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -41,6 +41,22 @@ public class UserController {
 
         userService.registerUser(userRegisterBindingModel);
 
+        return "redirect:/user/login";
+    }
+
+    @ExceptionHandler({UsernameAlreadyExistsException.class, EmailAlreadyExistsException.class})
+    public String registrationExceptions(RedirectAttributes redirectAttributes, Exception e){
+        redirectAttributes.addFlashAttribute("error",true);
+        redirectAttributes.addFlashAttribute("reason",e.getMessage());
+        return "redirect:/user/register";
+    }
+
+    @ExceptionHandler({UsernameNotFoundException.class})
+    public String loginException(RedirectAttributes redirectAttributes,UsernameNotFoundException e){
+        //Note: Doesn't work for some reason. Look into the throwing of UsernameNotFound
+        //Stick with the current variant until you find a better way.
+        redirectAttributes.addFlashAttribute("error",true);
+        redirectAttributes.addFlashAttribute("reason",e.getMessage());
         return "redirect:/user/login";
     }
 

@@ -6,61 +6,50 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Swordo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header th:fragment="navigation">
-    <nav>
-        <div>
-            <ul>
-                <th:block sec:authorize="isAnonymous()">
-                    <li>
-                        <a th:href="@{/user/login}">Login</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/user/register}">Register</a>
-                    </li>
+        <div id="navbar">
+            <th:block sec:authorize="isAnonymous()">
+                <form th:action="@{/user/login}">
+                    <input type="submit" value="Login">
+                </form>
+                <form th:action="@{/user/register}">
+                    <input type="submit" value="Register">
+                </form>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()">
+                <th:block th:if="${@extraUserData.id != null}">
+                    <p th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></p>
+                    <p th:text="|Coins: ${@extraUserData.coins}|"></p>
                 </th:block>
                 <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/admin}">Admin Console</a>
+                    <form th:action="@{/admin}">
+                        <input type="submit" value="Admin Console">
+                    </form>
                 </th:block>
-                <th:block sec:authorize="isAuthenticated()">
-                    <th:block th:if="${@extraUserData.id != null}">
-                            <p th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></p>
-                            <p th:text="|Coins: ${@extraUserData.coins}|"></p>
-                    </th:block>
-                    <th:block th:if="${@currentBattlefieldMonster.id == null}">
-                        <li>
-                            <a th:href="@{/battlefields}">Battlefields</a>
-                        </li>
-                    </th:block>
-                    <th:block th:unless="${@currentBattlefieldMonster.id == null}">
-                        <li>
-                            <a th:href="@{/fight}">Fight</a>
-                        </li>
-                    </th:block>
-                    <li>
-                        <a th:href="@{/user/profile}">Profile</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/town}">Town</a>
-                    </li>
-                    <li>
-                        <form th:action="@{/user/logout}" th:method="post">
-                        <input type="submit" value="Logout">
-                        </form>
-                    </li>
-                </th:block>
-            </ul>
+                <form th:if="${@currentBattlefieldMonster.id == null}" th:action="@{/battlefields}">
+                    <input type="submit" value="Battlefields">
+                </form>
+                <form th:unless="${@currentBattlefieldMonster.id == null}" th:action="@{/fight}">
+                    <input type="submit" value="Fight">
+                </form>
+                <form th:action="@{/user/profile}">
+                    <input type="submit" value="Profile">
+                </form>
+                <form th:action="@{/town}">
+                    <input type="submit" value="Town">
+                </form>
+                <form th:action="@{/user/logout}" th:method="post">
+                    <input type="submit" value="Logout">
+                </form>
+            </th:block>
         </div>
-    </nav>
 </header>
 <footer th:fragment="footer">
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    Made by Martin Zhekov. All rights reserved (maybe)</footer>
+    Made by Martin Zhekov. All rights reserved (maybe)
+</footer>
 </body>
 
 </html>

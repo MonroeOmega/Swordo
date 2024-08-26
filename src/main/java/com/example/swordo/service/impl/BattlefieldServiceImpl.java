@@ -70,7 +70,10 @@ public class BattlefieldServiceImpl implements BattlefieldService {
                 .stream()
                 .map(battlefield -> {
                     BattlefieldView battlefieldView = modelMapper.map(battlefield, BattlefieldView.class);
-                    battlefieldView.setMonsterCount(battlefield.getBattlefieldMonsters().size());
+                    battlefieldView.setMonsterCount(battlefield
+                            .getBattlefieldMonsters()
+                            .stream().filter(monster -> !monster.isEngaged())
+                            .toList().size());
                     return  battlefieldView;
                 })
                 .collect(Collectors.toList());

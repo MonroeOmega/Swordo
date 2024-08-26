@@ -10,8 +10,6 @@ import java.util.List;
 public interface UserService {
     void registerUser(UserRegisterBindingModel userRegisterBindingModel);
 
-    User findByUsername(String username);
-
     void loadExtraUserData(String username);
 
     void strike();
