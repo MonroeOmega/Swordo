@@ -9,54 +9,74 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <h1>This is the admin console. Here are all the admin functions.</h1>
-    <div>
-        <h3 th:text="|Current Coins: ${@extraUserData.coins}|"></h3>
-        <form th:action="@{/admin/coins}" th:method="post">
-            <input type="submit" value="Get Coins">
-        </form>
-        <h3 th:text="|Current Swords in Shop: ${swordCount}|"></h3>
-        <form th:action="@{/admin/add_swords}" th:method="post">
-            <input type="submit" value="Add more swords">
-        </form>
-        <h3>Users:</h3>
-        <form th:action="@{/admin/users}">
-            <input type="submit" value="Check them">
-        </form>
-        <h3>Get a Maxed out Sword</h3>
-        <form th:action="@{/admin/sword}" th:method="post" th:object="${admin_sword}">
-            <select th:field="*{type}">
-                <option th:each="swordType : ${T(com.example.swordo.models.entity.SwordTypeEnum).values()}"
-                        th:text="${swordType}" th:value="${swordType}"></option>
-            </select>
-            <input type="submit"  value="Get Sword">
-        </form>
-        <h3>Loose Swords:</h3>
-        <h4 th:text="${loose_sword_count}"></h4>
-        <form th:action="@{/admin/clean}" th:method="post">
-            <input type="submit" value="Clean up">
-        </form>
-        <h3>Add monsters:</h3>
-        <form th:action="@{/admin/monsters}" th:method="post" th:object="${admin_monsters}">
-            <select th:field="*{battlefieldSizeEnum}">
-                <option th:each="size : ${T(com.example.swordo.models.entity.BattlefieldSizeEnum).values()}"
-                        th:text="${size}" th:value="${size}"></option>
-            </select>
-            <input type="submit"  value="Add monsters">
-        </form>
-        <h3>Add Jimmy Omega (Bad idea tho):</h3>
-        <form th:action="@{/admin/jimmyomega}" th:method="post" th:object="${admin_monsters}">
-            <select th:field="*{battlefieldSizeEnum}">
-                <option th:each="size : ${T(com.example.swordo.models.entity.BattlefieldSizeEnum).values()}"
-                        th:text="${size}" th:value="${size}"></option>
-            </select>
-            <input type="submit"  value="Add Jimmy Omega">
-            <p>This moves him from nothingness to a battlefield, or from a battlefield to another battlefield.</p>
-        </form>
-        <h3 th:if="${IsHeHere}">Persuade Jimmy Omega to leave</h3>
-        <form th:if="${IsHeHere}" th:action="@{/admin/persuade}" th:method="post">
-            <input type="submit"  value="Persuade Him"><small>He wouldn't really go away tho.</small>
-        </form>
+    <div class="admin-container">
+        <h1>This is the admin console. Here are all the admin functions.</h1>
+        <div class="function-container">
+            <div>
+                <h3 th:text="|Current Coins: ${@extraUserData.coins}|"></h3>
+                <form th:action="@{/admin/coins}" th:method="post">
+                    <input class="input-button" type="submit" value="Get Coins">
+                </form>
+            </div>
+            <div>
+                <h3 th:text="|Current Swords in Shop: ${swordCount}|"></h3>
+                <form th:action="@{/admin/add_swords}" th:method="post">
+                    <input class="input-button" type="submit" value="Add more swords">
+                </form>
+            </div>
+            <div>
+                <h3>Users:</h3>
+                <form th:action="@{/admin/users}">
+                    <input class="input-button" type="submit" value="Check them">
+                </form>
+            </div>
+            <div>
+                <h3>Get a Maxed out Sword</h3>
+                <form th:action="@{/admin/sword}" th:method="post" th:object="${admin_sword}">
+                    <select th:field="*{type}">
+                        <option th:each="swordType : ${T(com.example.swordo.models.entity.SwordTypeEnum).values()}"
+                                th:text="${swordType}" th:value="${swordType}"></option>
+                    </select>
+                    <input class="input-button" type="submit" value="Get Sword">
+                </form>
+            </div>
+            <div>
+                <h3>Loose Swords:</h3>
+                <h4 th:text="${loose_sword_count}"></h4>
+                <form th:action="@{/admin/clean}" th:method="post">
+                    <input class="input-button" type="submit" value="Clean up">
+                </form>
+            </div>
+            <div>
+                <h3>Add monsters:</h3>
+                <form th:action="@{/admin/monsters}" th:method="post" th:object="${admin_monsters}">
+                    <select th:field="*{battlefieldSizeEnum}">
+                        <option th:each="size : ${T(com.example.swordo.models.entity.BattlefieldSizeEnum).values()}"
+                                th:text="${size}" th:value="${size}"></option>
+                    </select>
+                    <input class="input-button" type="submit" value="Add monsters">
+                </form>
+            </div>
+            <div>
+                <h3>Add Jimmy Omega (Bad idea tho):</h3>
+                <form th:action="@{/admin/jimmyomega}" th:method="post" th:object="${admin_monsters}">
+                    <select th:field="*{battlefieldSizeEnum}">
+                        <option th:each="size : ${T(com.example.swordo.models.entity.BattlefieldSizeEnum).values()}"
+                                th:text="${size}" th:value="${size}"></option>
+                    </select>
+                    <input class="input-button" type="submit" value="Add Jimmy Omega">
+                    <p>This moves him from nothingness to a battlefield, or from a battlefield to another
+                        battlefield.</p>
+                </form>
+            </div>
+            <div th:if="${IsHeHere}">
+                <h3>Persuade Jimmy Omega to leave</h3>
+                <form th:action="@{/admin/persuade}" th:method="post">
+                    <input type="submit" class="input-button" value="Persuade Him"><p>He wouldn't really go away
+                    tho.</p>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 </body>

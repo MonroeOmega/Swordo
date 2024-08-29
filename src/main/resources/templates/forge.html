@@ -6,16 +6,16 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="forge-body">
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <h3>Welcome to the forge. Here you can purchase, upgrade or fix swords.</h3>
-    <div>
+    <div class="main-container">
+        <h3>Welcome to the forge. Here you can purchase, upgrade or fix swords.</h3>
         <form th:action="@{/town/forge/shop}">
-            <input type="submit" value="Shop">
+            <input class="input-button" type="submit" value="Shop">
         </form>
         <form th:action="@{/town/forge/upgrade}">
-            <input type="submit" value="Reforge">
+            <input class="input-button" type="submit" value="Reforge">
         </form>
     </div>
 </main>

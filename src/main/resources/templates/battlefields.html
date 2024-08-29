@@ -9,14 +9,17 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
-        <div th:each="battlefield : ${battlefields}">
-            <h4 th:text="|Size: ${battlefield.size}|"></h4>
-            <h3 th:text="|Amount of monsters: ${battlefield.monsterCount}|"></h3>
-            <p th:text="|Description: ${battlefield.description}|"></p>
-            <form th:action="@{/battlefields/battlefield/{id}(id = *{battlefield.id})}">
-                <input type="submit" value="Check it out">
-            </form>
+    <div class="battlefields-container">
+        <h1>Here are all the available battlefields</h1>
+        <div class="field-container">
+            <div th:each="battlefield : ${battlefields}">
+                <h4 th:text="|Size: ${battlefield.size}|"></h4>
+                <h3 th:text="|Amount of monsters: ${battlefield.monsterCount}|"></h3>
+                <p th:text="|Description: ${battlefield.description}|"></p>
+                <form th:action="@{/battlefields/battlefield/{id}(id = *{battlefield.id})}">
+                    <input class="input-button" type="submit" value="Check it out">
+                </form>
+            </div>
         </div>
     </div>
 </main>

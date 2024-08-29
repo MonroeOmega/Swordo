@@ -9,17 +9,19 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
+    <div class="battlefield-container">
         <h3 th:text="|Size: ${battlefieldData.size}|"></h3>
         <p th:text="${battlefieldData.description}"></p>
         <h4>Monsters: </h4>
-        <div th:each="monster:${monsters}">
-            <h3 th:text="|Type: ${monster.monster.classs}|"></h3>
-            <h3 th:if="${monster.id != theId}" th:text="|Hitpoints: ${monster.currentHitpoints}|"></h3>
-            <h3 th:unless="${monster.id != theId}">Hitpoints: 0</h3>
-            <form th:action="@{/fight/{id}(id = *{monster.id})}" th:method="post">
-                <input type="submit" value="Fight it">
-            </form>
+        <div class="monster-container">
+            <div class="monster" th:each="monster:${monsters}">
+                <h3 th:text="|Type: ${monster.monster.classs}|"></h3>
+                <h3 th:if="${monster.id != theId}" th:text="|Hitpoints: ${monster.currentHitpoints}|"></h3>
+                <h3 th:unless="${monster.id != theId}">Hitpoints: 0</h3>
+                <form th:action="@{/fight/{id}(id = *{monster.id})}" th:method="post">
+                    <input class="input-button" type="submit" value="Fight it">
+                </form>
+            </div>
         </div>
 
     </div>

@@ -9,10 +9,10 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
+    <div class="users-main-container">
         <h1>Users</h1>
         <div>
-            <div th:each="user:${users}">
+            <div class="user-container" th:each="user:${users}">
                 <p th:text="|User: ${user.username}, Email: ${user.email}, Role: ${user.role}|" ></p>
                 <p th:text="|Hitpoints: ${user.hitpoints}, Coins: ${user.coins}|"></p>
                 <p th:text="|Sword Type: ${user.sword.type}, Strength: ${user.sword.strength}, Crit Chance: ${user.sword.critChance}, Durability: ${user.sword.durability}|"></p>

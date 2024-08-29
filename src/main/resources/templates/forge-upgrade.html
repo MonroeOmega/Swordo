@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="forge-body">
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
+    <div class="main-container">
         <h3>Current sword</h3>
         <div>
             <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
@@ -17,18 +17,18 @@
         <h3>Upgrade:</h3>
         <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
         <form th:if="${upgradableDamage}" th:action="@{/town/forge/upgrade/damage}" th:method="post">
-            <input type="submit" value="Damage"><small>100 coins</small>
+            <input class="input-button" type="submit" value="Damage"><small>100 coins</small>
         </form>
         <p th:unless="${upgradableDamage}">Can't upgrade damage further.</p>
         <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
         <form th:if="${upgradableCrit}" th:action="@{/town/forge/upgrade/crit}" th:method="post">
-            <input type="submit" value="Crit Chance"><small>100 coins</small>
+            <input class="input-button" type="submit" value="Crit Chance"><small>100 coins</small>
         </form>
         <p th:unless="${upgradableCrit}">Can't upgrade critical chance further.</p>
         <h3>Repair:</h3>
         <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}" th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
         <form th:if="${fixable}" th:action="@{/town/forge/upgrade/durability}" th:method="post">
-            <input type="submit" value="Durability"><small>100 coins, 50% chance to lose durability.</small>
+            <input class="input-button" type="submit" value="Durability"><small>100 coins, 50% chance to lose durability.</small>
         </form>
         <p th:unless="${fixable}">Can't be made more durable.</p>
     </div>

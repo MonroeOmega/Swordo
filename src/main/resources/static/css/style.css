@@ -1,39 +1,5 @@
-header div{
-    display: flex;
-    justify-content: space-around;
-}
-
-header p{
-    font-size: 15px;
-}
-
-header input{
-    background-color: forestgreen;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
-
-header input:hover{
-    transform: scale(0.9);
-    background-color: #009000;
-}
-
-header{
-    background-color: darkgreen;
-}
-footer{
-    height: 50px;
-    background-color: darkgreen;
-    text-align: center;
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    margin-top: auto;
+*{
+    font-family: cursive;
 }
 
 body,html{
@@ -53,6 +19,159 @@ body{
     background-size: cover;
 }
 
+header div{
+    display: flex;
+    justify-content: space-around;
+}
+
+header p{
+    font-size: 15px;
+    color: white;
+}
+
+header input{
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+header input:hover{
+    transform: scale(0.9);
+    background-color: rgb(40,40,40);
+}
+
+header{
+    background-color: rgb(10,10,10);
+}
+footer{
+    background-color: rgb(10,10,10);
+    text-align: center;
+    position: sticky;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+}
+
+footer p{
+    color: white;
+}
+
 .login-body{
     background-image: url("/images/login.jpg");
+}
+
+.error-body{
+    background-image: url("/images/error2.png");
+}
+
+.forge-body{
+    background-image: url("/images/blacksmith.png");
+}
+
+.error-div h1{
+    color: black;
+}
+
+.main-container, .error-div{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 25px;
+}
+
+.shop-container, .alpha-container, .battlefields-container, .admin-container,.users-main-container,.battlefield-container{
+    text-align: center;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.5);
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: relative;
+}
+
+.alpha-container{
+    top: 100%;
+}
+
+.input-button{
+    background-color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+}
+
+.input-button:hover{
+    background-color: black;
+    color: white;
+    transform: scale(0.9);
+}
+
+.swords-container, .fight-container, .field-container,.function-container,.monster-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.sword-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 15px;
+}
+
+.user-container{
+    border-radius: 15px;
+}
+
+.purchase,.buttons-fight{
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    position: relative;
+}
+
+.buttons-fight input{
+    margin-bottom: 3px;
+}
+
+.sword-container:hover,.user-container:hover,.monster-container:hover{
+    background-color: rgba(256,256,256,0.8);
+}
+
+.monster{
+    margin-bottom: 5px;
+}
+
+#login{
+    height: 33%;
+    width: 20%;
+}
+
+#login .input-button{
+    margin-top: 5px;
+}
+
+.text-input{
+    border: none;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.text-input{
+    font-size: 20px;
 }

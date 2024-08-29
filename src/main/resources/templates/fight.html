@@ -9,52 +9,60 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div th:if="${@currentBattlefieldMonster.id == null}">
-        <h1>The dimension used to fight monsters is currently empty. You should go back town.</h1>
-        <form th:action="@{/town}">
-            <input type="submit" value="Go back town">
-        </form>
-    </div>
-    <div th:unless="${@currentBattlefieldMonster.id == null}">
-        <div>
-            <h4 th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></h4>
-            <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
-            <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
-            <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
-            <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}" th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
-        </div>
-        <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
-            <form th:if="${!IsItHim}" th:action="@{/fight/strike}" th:method="post">
-                <input type="submit" value="Strike">
-            </form>
-            <form th:if="${!IsItHim}" th:action="@{/fight/strike/windup}" th:method="post">
-                <input type="submit" value="Strike with windup"><small>50% chance to miss</small>
-            </form>
-            <form th:if="${IsItHim}" th:action="@{/fight/strike/him}" th:method="post">
-                <input type="submit" value="Strike Him"><small>You could only harm yourself</small>
-            </form>
-            <form th:action="@{/fight/bail}" th:method="post">
-                <input type="submit" value="Bail">
+    <div class="alpha-container">
+        <div th:if="${@currentBattlefieldMonster.id == null}">
+            <h1>The dimension used to fight monsters is currently empty. You should go back town.</h1>
+            <form th:action="@{/town}">
+                <input type="submit" value="Go back town">
             </form>
         </div>
-        <div th:unless="${@currentBattlefieldMonster.currentHitpoints > 0}">
-            <p>The monster is dead.</p>
-            <form th:action="@{/fight/loot}" th:method="post">
-                <input type="submit" value="Loot it" aria-describedby="loot">
-                <small id="loot" th:text="|(${@currentBattlefieldMonster.loot} monster coins)|"></small>
-            </form>
-        </div>
-        <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0 and !IsItHim}" >
-            <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
-            <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
-            <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
-            <h5 th:text="|Current Hitpoints:${@currentBattlefieldMonster.currentHitpoints}|"></h5>
-        </div>
-        <div th:if="${IsItHim}">
-            <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
-            <h5>Max Strike: 0</h5>
-            <h5>Min Strike: 0</h5>
-            <h5>Current Hitpoints: 0</h5>
+        <div class="fight-container" th:unless="${@currentBattlefieldMonster.id == null}">
+            <div id="user-fight">
+                <h4 th:text="|Hitpoints: ${@extraUserData.hitpoints}|"></h4>
+                <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|"></h5>
+                <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
+                <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
+                <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}"
+                    th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
+            </div>
+            <div>
+                <div class="buttons-fight" th:if="${@currentBattlefieldMonster.currentHitpoints > 0}">
+                    <form th:if="${!IsItHim}" th:action="@{/fight/strike}" th:method="post">
+                        <input class="input-button" type="submit" value="Strike">
+                    </form>
+                    <form th:if="${!IsItHim}" th:action="@{/fight/strike/windup}" th:method="post">
+                        <input class="input-button" type="submit" value="Strike with windup">
+                    </form>
+                    <form th:if="${IsItHim}" th:action="@{/fight/strike/him}" th:method="post">
+                        <input class="input-button" type="submit" value="Strike Him"><p>You could only harm
+                        yourself</p>
+                    </form>
+                    <form th:action="@{/fight/bail}" th:method="post">
+                        <input class="input-button" type="submit" value="Bail">
+                    </form>
+                </div>
+                <div class="buttons-fight" th:unless="${@currentBattlefieldMonster.currentHitpoints > 0}">
+                    <p>The monster is dead.</p>
+                    <form th:action="@{/fight/loot}" th:method="post">
+                        <input class="input-button" type="submit" value="Loot it">
+                        <p th:text="|(${@currentBattlefieldMonster.loot} monster coins)|"></p>
+                    </form>
+                </div>
+            </div>
+            <div id="monster-fight">
+                <div th:if="${@currentBattlefieldMonster.currentHitpoints > 0 and !IsItHim}">
+                    <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
+                    <h5 th:text="|Max Strike: ${@currentBattlefieldMonster.monster.maxStrike}|"></h5>
+                    <h5 th:text="|Min Strike: ${@currentBattlefieldMonster.monster.minStrike}|"></h5>
+                    <h5 th:text="|Current Hitpoints:${@currentBattlefieldMonster.currentHitpoints}|"></h5>
+                </div>
+                <div th:if="${IsItHim}">
+                    <h4 th:text="|Monster: ${@currentBattlefieldMonster.monster.classs}|"></h4>
+                    <h5>Max Strike: 0</h5>
+                    <h5>Min Strike: 0</h5>
+                    <h5>Current Hitpoints: 0</h5>
+                </div>
+            </div>
         </div>
     </div>
 </main>

@@ -6,39 +6,48 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="forge-body">
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
+    <div class="shop-container" id="shop">
         <h3>Current sword</h3>
         <div>
-            <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|" ></h5>
+            <h5 th:text="|Sword Type: ${@extraUserData.sword.type}|"></h5>
             <h5 th:text="|Damage: ${@extraUserData.sword.strength}|"></h5>
             <h5 th:text="|Crit Chance: ${@extraUserData.sword.critChance}|"></h5>
-            <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}" th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
+            <h5 th:if="${@extraUserData.sword.type != T(com.example.swordo.models.entity.SwordTypeEnum).BROKEN_SWORD}"
+                th:text="|Durability: ${@extraUserData.sword.durability}|"></h5>
         </div>
         <h3>You could get a random sword for 200 coins.</h3>
         <div>
-            <form th:if="${@extraUserData.getCoins() >= 200}" th:action="@{/town/forge/shop/buy/random}" th:method="POST">
-                <input type="submit" value="Get Random">
+            <form th:if="${@extraUserData.getCoins() >= 200}" th:action="@{/town/forge/shop/buy/random}"
+                  th:method="POST">
+                <input class="input-button" type="submit" value="Get Random">
             </form>
             <h5 th:unless="${@extraUserData.getCoins() >= 200}">
                 But you can't.
             </h5>
         </div>
         <h3>Here are all the available swords:</h3>
-        <div th:each="forgeSword:${forgeSwords}">
-            <h4 th:text="|Type: ${forgeSword.sword.type}|"></h4>
-            <h4 th:text="|Strength: ${forgeSword.sword.strength}|"></h4>
-            <h4 th:text="|Crit Chance: ${forgeSword.sword.critChance}|"></h4>
-            <h4 th:text="|Durability: ${forgeSword.sword.durability}|"></h4>
-            <h4 th:text="|Price: ${forgeSword.price}|"></h4>
-            <form th:if="${@extraUserData.getCoins() >= forgeSword.price}" th:action="@{/town/forge/shop/buy/{id}(id = *{forgeSword.id})}" th:method="post">
-                <input type="submit" value="Buy">
-            </form>
-            <h5 th:unless="${@extraUserData.getCoins() >= forgeSword.price}">
-                You can't afford that.
-            </h5>
+        <div class="swords-container">
+            <div class="sword-container" th:each="forgeSword:${forgeSwords}">
+                <div class="stats">
+                    <h4 th:text="|Type: ${forgeSword.sword.type}|"></h4>
+                    <h4 th:text="|Strength: ${forgeSword.sword.strength}|"></h4>
+                    <h4 th:text="|Crit Chance: ${forgeSword.sword.critChance}|"></h4>
+                    <h4 th:text="|Durability: ${forgeSword.sword.durability}|"></h4>
+                    <h4 th:text="|Price: ${forgeSword.price}|"></h4>
+                </div>
+                <div>
+                    <form class="purchase" th:if="${@extraUserData.getCoins() >= forgeSword.price}"
+                          th:action="@{/town/forge/shop/buy/{id}(id = *{forgeSword.id})}" th:method="post">
+                        <input class="input-button" type="submit" value="Buy">
+                    </form>
+                    <h5 class="purchase" th:unless="${@extraUserData.getCoins() >= forgeSword.price}">
+                        You can't afford that.
+                    </h5>
+                </div>
+            </div>
         </div>
     </div>
 </main>

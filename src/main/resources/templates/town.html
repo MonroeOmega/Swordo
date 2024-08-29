@@ -9,14 +9,14 @@
 <body>
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
+    <div class="main-container">
         <h1>Welcome to the Town</h1>
         <p>Here you can rest in order to heal or look for weapons.</p>
         <form th:action="@{/town/rest}" th:method="post">
-            <input type="submit" value="Rest" aria-describedby="cost"><small id="cost">Costs 50 coins</small>
+            <input class="input-button" type="submit" value="Rest" aria-describedby="cost"><small id="cost">Costs 50 coins</small>
         </form>
         <form th:action="@{/town/forge}">
-            <input type="submit" value="Go to forge">
+            <input class="input-button" type="submit" value="Go to forge">
         </form>
     </div>
 </main>

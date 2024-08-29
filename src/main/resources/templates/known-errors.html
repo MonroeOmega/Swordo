@@ -6,12 +6,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="error-body">
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
-    <div>
+    <div class="error-div">
         <h1>Oops. You were too slow!!!</h1>
         <p th:text="${reason}"></p>
+        <form th:action="@{/battlefields}">
+            <input class="input-button" type="submit" value="Go back.">
+        </form>
     </div>
 </main>
 </body>

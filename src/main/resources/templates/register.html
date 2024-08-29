@@ -7,7 +7,7 @@
 </head>
 <header th:replace="~{common/fragments::navigation}"></header>
 <body>
-    <div>
+    <div class="main-container">
         <div>
             <h1><strong>Register</strong></h1>
             <h2 th:if="${error}" th:text="${reason}"></h2>
@@ -17,44 +17,44 @@
                 <div>
                     <label for="username">Username</label>
                     <div>
-                        <input th:field="*{username}" type="text" id="username"
-                               aria-describedby="usernameHelpInline" placeholder="Username">
-                        <small id="usernameHelpInline" th:if="${#fields.hasErrors('username')}">
+                        <input class="text-input" th:field="*{username}" type="text" id="username"
+                                placeholder="Username">
+                        <p class="error-p" th:if="${#fields.hasErrors('username')}">
                             Username length must be between 5 and 20 characters.
-                        </small>
+                        </p>
                     </div>
                 </div>
                 <div>
                     <label for="email">Email</label>
                     <div>
-                        <input th:field="*{email}" type="text" class="form-control" id="email"
-                               aria-describedby="emailHelpInline" placeholder="email@example.com">
-                        <small id="emailHelpInline" th:if="${#fields.hasErrors('email')}">
+                        <input class="text-input" th:field="*{email}" type="text" id="email"
+                                placeholder="email@example.com">
+                        <p class="error-p" th:if="${#fields.hasErrors('email')}">
                             Invalid email address.
-                        </small>
+                        </p>
                     </div>
                 </div>
                 <div>
                     <label for="password">Password</label>
                     <div>
-                        <input th:field="*{password}" type="password" id="password"
-                               aria-describedby="passwordHelpInline" placeholder="Password">
-                        <small id="passwordHelpInline" th:if="${#fields.hasErrors('password')}">
+                        <input class="text-input" th:field="*{password}" type="password" id="password"
+                                placeholder="Password">
+                        <p class="error-p" th:if="${#fields.hasErrors('password')}">
                             Password length must be more than 5 characters long and less than 20.
-                        </small>
+                        </p>
                     </div>
                 </div>
                 <div>
                     <label for="confirmPassword">Confirm Password</label>
                     <div>
-                        <input th:field="*{repeatPassword}" type="password" id="confirmPassword"
-                               aria-describedby="confirmPasswordHelpInline" placeholder="Confirm Password">
-                        <small id="confirmPasswordHelpInline" th:if="${#fields.hasErrors('repeatPassword')}">
+                        <input class="text-input" th:field="*{repeatPassword}" type="password" id="confirmPassword"
+                                placeholder="Confirm Password">
+                        <p class="error-p" th:if="${#fields.hasErrors('repeatPassword')}">
                             Password length must be more than 5 characters long and less than 20.
-                        </small>
+                        </p>
                     </div>
                 </div>
-                <button type="submit">Register</button>
+                <input class="input-button" type="submit" value="Register">
             </form>
         </div>
 
