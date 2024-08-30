@@ -73,6 +73,25 @@ footer p{
     background-image: url("/images/blacksmith.png");
 }
 
+#battlefield,#battlefields{
+    background-image: url("/images/battlefield.jpg");
+}
+
+.bear{
+}
+
+.human{
+
+}
+
+.snake{
+
+}
+
+.boar{
+
+}
+
 .error-div h1{
     color: black;
 }
@@ -133,7 +152,7 @@ footer p{
     border-radius: 15px;
 }
 
-.user-container{
+.user-container,.monster{
     border-radius: 15px;
 }
 
@@ -149,7 +168,7 @@ footer p{
     margin-bottom: 3px;
 }
 
-.sword-container:hover,.user-container:hover,.monster-container:hover{
+.sword-container:hover,.user-container:hover,.monster:hover{
     background-color: rgba(256,256,256,0.8);
 }
 

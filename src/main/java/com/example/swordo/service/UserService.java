@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
     void registerUser(UserRegisterBindingModel userRegisterBindingModel);
-
+    void generateAdmin();
     void loadExtraUserData(String username);
 
     void strike();

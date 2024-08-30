@@ -2,7 +2,9 @@ package com.example.swordo.service.impl;
 
 import com.example.swordo.exceptions.BattlefieldNotFoundException;
 import com.example.swordo.models.entity.Battlefield;
+import com.example.swordo.models.entity.BattlefieldMonster;
 import com.example.swordo.models.entity.BattlefieldSizeEnum;
+import com.example.swordo.models.entity.MonsterClassEnum;
 import com.example.swordo.repository.BattlefieldRepository;
 import com.example.swordo.service.BattlefieldService;
 import com.example.swordo.views.BattlefieldView;
@@ -45,8 +47,7 @@ public class BattlefieldServiceImpl implements BattlefieldService {
                         }
                         case BIG -> {
                             battlefield.setDescription("A war was fought here. Only mutated humans and" +
-                                    " gruesome bears can be fought here. Although... You feel like something " +
-                                    " terrible lurks in the shadows of the barren land");
+                                    " gruesome bears can be fought here.");
                             battlefieldRepository.save(battlefield);
                         }
                     }
@@ -74,7 +75,7 @@ public class BattlefieldServiceImpl implements BattlefieldService {
                             .getBattlefieldMonsters()
                             .stream().filter(monster -> !monster.isEngaged())
                             .toList().size());
-                    return  battlefieldView;
+                    return battlefieldView;
                 })
                 .collect(Collectors.toList());
     }

@@ -24,4 +24,9 @@ public interface BattlefieldMonsterService {
     void giveHimSomeCheese();
     boolean checkBattlefields();
     void checkForCheekines();
+    void deEngageMonsters();
+    void addMonsters(MonsterClassEnum classs, int count ,BattlefieldSizeEnum size);
+    BattlefieldSizeEnum findHisBattlefield();
+
+    void accountForNumbers();
 }

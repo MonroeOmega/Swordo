@@ -82,6 +82,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void generateAdmin() {
+        if(userRepository.count() == 0) {
+            User user = new User();
+            user.setUsername("JimmyOmega");
+            user.setPassword(encoder.encode("omega1252"));
+            user.setEmail("jimmy@omega.com");
+            user.setCoins(9999);
+            user.setHitpoints(300);
+            user.setRole(UserRoleEnum.ADMIN);
+            user.setSword(swordService.getBroken());
+            userRepository.save(user);
+        }
+    }
+
+    @Override
     public void loadExtraUserData(String username) {
         User user = userRepository.findByUsername(username).orElse(null);
         extraUserData.setId(user.getId());

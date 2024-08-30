@@ -4,10 +4,7 @@ import com.example.swordo.current.CurrentBattlefieldMonster;
 import com.example.swordo.exceptions.CheekyException;
 import com.example.swordo.exceptions.MonsterAlreadyEngagedException;
 import com.example.swordo.exceptions.MonsterMissingException;
-import com.example.swordo.models.entity.BattlefieldMonster;
-import com.example.swordo.models.entity.BattlefieldSizeEnum;
-import com.example.swordo.models.entity.Monster;
-import com.example.swordo.models.entity.MonsterClassEnum;
+import com.example.swordo.models.entity.*;
 import com.example.swordo.repository.BattlefieldMonsterRepository;
 import com.example.swordo.service.BattlefieldMonsterService;
 import com.example.swordo.service.BattlefieldService;
@@ -195,6 +192,48 @@ public class BattlefieldMonsterServiceImpl implements BattlefieldMonsterService 
     public void checkForCheekines() {
         if(currentBattlefieldMonster.getId() != null){
             throw new CheekyException();
+        }
+    }
+
+    @Override
+    public void deEngageMonsters() {
+        List<BattlefieldMonster> monsters = battlefieldMonsterRepository.findAllByEngaged(true);
+        monsters.forEach(monster -> monster.setEngaged(false));
+        battlefieldMonsterRepository.saveAll(monsters);
+    }
+
+    @Override
+    public void addMonsters(MonsterClassEnum classs, int count, BattlefieldSizeEnum size) {
+        List<BattlefieldMonster> monsters = getNewBattlefieldMonsters(count,classs);
+        Battlefield battlefield = battlefieldService.getBattlefield(size);
+        monsters.forEach(mon -> mon.setBattlefield(battlefield));
+        battlefieldMonsterRepository.saveAll(monsters);
+    }
+
+    @Override
+    public BattlefieldSizeEnum findHisBattlefield() {
+        BattlefieldMonster battlefieldMonster = battlefieldMonsterRepository.findBattlefieldMonsterByMonster_Id(5L);
+        if (battlefieldMonster != null){
+            return battlefieldMonster.getBattlefield().getSize();
+        }
+        return null;
+    }
+
+    @Override
+    public void accountForNumbers() {
+        if(battlefieldMonsterRepository.countBattlefieldMonstersByMonster_Classs(MonsterClassEnum.SNAKER) < 2){
+            addMonsters(MonsterClassEnum.SNAKER,6, BattlefieldSizeEnum.SMALL);
+        }
+        if(battlefieldMonsterRepository.countBattlefieldMonstersByMonster_Classs(MonsterClassEnum.BOARER) < 4){
+            addMonsters(MonsterClassEnum.BOARER,3, BattlefieldSizeEnum.SMALL);
+            addMonsters(MonsterClassEnum.BOARER,5, BattlefieldSizeEnum.MEDIUM);
+        }
+        if(battlefieldMonsterRepository.countBattlefieldMonstersByMonster_Classs(MonsterClassEnum.HUMANLIKER) < 4){
+            addMonsters(MonsterClassEnum.HUMANLIKER,3, BattlefieldSizeEnum.MEDIUM);
+            addMonsters(MonsterClassEnum.HUMANLIKER,5, BattlefieldSizeEnum.BIG);
+        }
+        if(battlefieldMonsterRepository.countBattlefieldMonstersByMonster_Classs(MonsterClassEnum.BEARER) < 2){
+            addMonsters(MonsterClassEnum.BEARER,3,BattlefieldSizeEnum.BIG);
         }
     }
 

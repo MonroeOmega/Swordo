@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body id="battlefields">
 <header th:replace="~{common/fragments::navigation}"></header>
 <main>
     <div class="battlefields-container">
@@ -16,6 +16,7 @@
                 <h4 th:text="|Size: ${battlefield.size}|"></h4>
                 <h3 th:text="|Amount of monsters: ${battlefield.monsterCount}|"></h3>
                 <p th:text="|Description: ${battlefield.description}|"></p>
+                <p th:if="${whichOneIsHeIn == battlefield.size}">A feeling of emptiness comes out of this fighting ground.</p>
                 <form th:action="@{/battlefields/battlefield/{id}(id = *{battlefield.id})}">
                     <input class="input-button" type="submit" value="Check it out">
                 </form>
