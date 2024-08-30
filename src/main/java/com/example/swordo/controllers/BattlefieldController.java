@@ -24,7 +24,9 @@ public class BattlefieldController {
 
     @GetMapping
     private String battlefields(Model model){
+        battlefieldMonsterService.accountForNumbers();
         model.addAttribute("battlefields",battlefieldService.viewAllBattlefields());
+        model.addAttribute("whichOneIsHeIn", battlefieldMonsterService.findHisBattlefield());
         battlefieldMonsterService.checkForCheekines();
         return "battlefields";
     }
