@@ -73,7 +73,7 @@ public class FightController {
     private String loot(){
         userService.loot();
         battlefieldMonsterService.disposeOfCurrentMonster();
-        return "redirect:/fight";
+        return "redirect:/town";
     }
 
     @PostMapping("/bail")
