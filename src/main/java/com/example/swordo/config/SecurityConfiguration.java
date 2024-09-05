@@ -16,7 +16,6 @@ public class SecurityConfiguration{
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder encoder;
-
     private final CustomLogoutHandler logoutHandler;
 
 
