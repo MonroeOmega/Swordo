@@ -62,7 +62,6 @@ public class TownController {
 
     @GetMapping("/forge/upgrade")
     public String upgrade(Model model){
-        //Note: Make methods to adjust the prices.
         model.addAttribute("critCost",100);
         model.addAttribute("upgradableCrit", swordForgeService.upgradableCrit());
         model.addAttribute("damageCost",100);

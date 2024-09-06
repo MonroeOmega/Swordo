@@ -11,6 +11,7 @@
         <div>
             <h1><strong>Register</strong></h1>
             <h2 th:if="${error}" th:text="${reason}"></h2>
+            <h2 th:if="${equalError}">Passwords don't match</h2>
         </div>
         <div>
             <form th:action="@{/user/register}" th:method="POST" th:object="${userRegisterBindingModel}">
@@ -40,7 +41,7 @@
                         <input class="text-input" th:field="*{password}" type="password" id="password"
                                 placeholder="Password">
                         <p class="error-p" th:if="${#fields.hasErrors('password')}">
-                            Password length must be more than 5 characters long and less than 20.
+                            Password length must be more than 5 characters and less than 21.
                         </p>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                         <input class="text-input" th:field="*{repeatPassword}" type="password" id="confirmPassword"
                                 placeholder="Confirm Password">
                         <p class="error-p" th:if="${#fields.hasErrors('repeatPassword')}">
-                            Password length must be more than 5 characters long and less than 20.
+                            Password length must be more than 5 characters and less than 21.
                         </p>
                     </div>
                 </div>

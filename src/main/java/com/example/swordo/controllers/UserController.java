@@ -35,6 +35,9 @@ public class UserController {
         if(bindingResult.hasErrors()||!userRegisterBindingModel.getRepeatPassword().equals(userRegisterBindingModel.getPassword())){
             redirectAttributes.addFlashAttribute("userRegisterBindingModel",userRegisterBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",bindingResult);
+            if(!userRegisterBindingModel.getRepeatPassword().equals(userRegisterBindingModel.getPassword())){
+                redirectAttributes.addFlashAttribute("equalError",true);
+            }
 
             return "redirect:/user/register";
         }
@@ -49,15 +52,6 @@ public class UserController {
         redirectAttributes.addFlashAttribute("error",true);
         redirectAttributes.addFlashAttribute("reason",e.getMessage());
         return "redirect:/user/register";
-    }
-
-    @ExceptionHandler({UsernameNotFoundException.class})
-    public String loginException(RedirectAttributes redirectAttributes,UsernameNotFoundException e){
-        //Note: Doesn't work for some reason. Look into the throwing of UsernameNotFound
-        //Stick with the current variant until you find a better way.
-        redirectAttributes.addFlashAttribute("error",true);
-        redirectAttributes.addFlashAttribute("reason",e.getMessage());
-        return "redirect:/user/login";
     }
 
     @PostMapping("/login/error")

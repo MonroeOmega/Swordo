@@ -27,14 +27,8 @@ public class FightController {
         return "redirect:/fight";
     }
 
-    @ExceptionHandler({MonsterAlreadyEngagedException.class})
-    private String monsterEngaged(MonsterAlreadyEngagedException e, Model model){
-        model.addAttribute("reason",e.getMessage());
-        return "known-errors";
-    }
-
-    @ExceptionHandler({MonsterMissingException.class})
-    private String monsterKilledHandler(MonsterMissingException e,Model model){
+    @ExceptionHandler({MonsterMissingException.class,MonsterAlreadyEngagedException.class})
+    private String monsterKilledHandler(Exception e,Model model){
         model.addAttribute("reason",e.getMessage());
         return "known-errors";
     }

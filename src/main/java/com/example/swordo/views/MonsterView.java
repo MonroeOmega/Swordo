@@ -6,7 +6,6 @@ public class MonsterView {
     private Long id;
     private Integer currentHitpoints;
     private Monster monster;
-    private Long battlefieldId;
 
     public MonsterView() {
     }
@@ -33,13 +32,5 @@ public class MonsterView {
 
     public void setMonster(Monster monster) {
         this.monster = monster;
-    }
-
-    public Long getBattlefieldId() {
-        return battlefieldId;
-    }
-
-    public void setBattlefieldId(Long battlefieldId) {
-        this.battlefieldId = battlefieldId;
     }
 }

@@ -72,11 +72,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(userRegisterBindingModel.getPassword()));
         user.setCoins(0);
         user.setHitpoints(300);
-        if (user.getUsername().equals("JimmyOmega")) {
-            user.setRole(UserRoleEnum.ADMIN);
-        } else {
-            user.setRole(UserRoleEnum.USER);
-        }
+        user.setRole(UserRoleEnum.USER);
         user.setSword(swordService.getBroken());
         userRepository.save(user);
     }
@@ -133,7 +129,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void rest() {
         extraUserData.setCoins(extraUserData.getCoins() - 50);
-        if(currentBattlefieldMonster.getId() != null){
+        if(currentBattlefieldMonster.getId() != null && currentBattlefieldMonster.getCurrentHitpoints() > 0){
             int hitpoints = currentBattlefieldMonster.getCurrentHitpoints() + ((currentBattlefieldMonster.getMonster().getMaxHitpoints() - currentBattlefieldMonster.getCurrentHitpoints())/2);
             currentBattlefieldMonster.setCurrentHitpoints(hitpoints);
         }
@@ -207,9 +203,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void strikeHim() {
-        int durabilityRow = random(1,20);
-        int healthRow = random(1,20);
-        if(durabilityRow == 14){
+        int durabilityRoll = random(1,20);
+        int healthRoll = random(1,20);
+        if(durabilityRoll == 14){
             Sword sword = swordService.getBroken();
             Long oldId = extraUserData.getSword().getId();
             swordService.saveSword(sword);
@@ -217,7 +213,7 @@ public class UserServiceImpl implements UserService {
             saveUserData();
             swordService.discard(oldId);
         }
-        if(healthRow == 14){
+        if(healthRoll == 14){
             extraUserData.setHitpoints(0);
             battlefieldMonsterService.returnCurrentMonster();
             throw new DeathException();

@@ -33,7 +33,6 @@ public class DatabaseInit implements CommandLineRunner {
         battlefieldMonsterService.loadFirstMonsters();
         swordForgeService.initSwords();
         userService.generateAdmin();
-        //This is used to bring back monsters that are engaged while the app is turned off.
         battlefieldMonsterService.deEngageMonsters();
     }
 }

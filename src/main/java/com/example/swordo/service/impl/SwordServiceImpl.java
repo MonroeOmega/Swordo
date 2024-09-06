@@ -13,22 +13,14 @@ import java.util.List;
 public class SwordServiceImpl implements SwordService {
 
     private final SwordRepository swordRepository;
-    private final ExtraUserData extraUserData;
 
     public SwordServiceImpl(SwordRepository swordRepository, ExtraUserData extraUserData) {
         this.swordRepository = swordRepository;
-        this.extraUserData = extraUserData;
     }
 
     @Override
     public void saveSword(Sword sword) {
-        //Testing something. Change later if there is a problem.
         swordRepository.save(sword);
-    }
-
-    @Override
-    public Sword getSword(Long id) {
-        return swordRepository.findFirstById(id);
     }
 
     @Override

@@ -7,8 +7,6 @@ import java.util.List;
 public interface SwordService {
     void saveSword(Sword sword);
 
-    Sword getSword(Long id);
-
     Sword getBroken();
 
     void discard(Long id);
