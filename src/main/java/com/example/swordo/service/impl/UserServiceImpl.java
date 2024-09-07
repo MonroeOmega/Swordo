@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     public void rest() {
         extraUserData.setCoins(extraUserData.getCoins() - 50);
         if(currentBattlefieldMonster.getId() != null && currentBattlefieldMonster.getCurrentHitpoints() > 0){
-            int hitpoints = currentBattlefieldMonster.getCurrentHitpoints() + ((currentBattlefieldMonster.getMonster().getMaxHitpoints() - currentBattlefieldMonster.getCurrentHitpoints())/2);
+            int hitpoints = currentBattlefieldMonster.getCurrentHitpoints() + ((currentBattlefieldMonster.getMonster().getMaxHitpoints() - currentBattlefieldMonster.getCurrentHitpoints())/4);
             currentBattlefieldMonster.setCurrentHitpoints(hitpoints);
         }
         extraUserData.setHitpoints(300);

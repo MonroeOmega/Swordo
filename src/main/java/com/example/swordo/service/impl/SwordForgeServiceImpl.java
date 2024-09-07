@@ -133,7 +133,7 @@ public class SwordForgeServiceImpl implements SwordForgeService {
 
     @Override
     public void buyRandom() {
-        if(extraUserData.getCoins() > 200) {
+        if(extraUserData.getCoins() >= 200) {
             extraUserData.setCoins(extraUserData.getCoins() - 200);
             SwordTypeEnum randType = SwordTypeEnum.random();
             SwordInMaking swordInMaking = swordInMakingService.getSwordInMakingByType(randType);
